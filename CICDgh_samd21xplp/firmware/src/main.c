@@ -58,10 +58,10 @@ int main ( void )
             myCnt++;
             if(cEchoCnt/2>=myCnt)
             {
-                printf("c"); //-branch-main
+                printf("e"); //-branch_1_cicd_testing
             } else if ((cEchoCnt/2<myCnt) & (cEchoCnt>=myCnt))
             {
-                printf("d"); //-branch-main
+                printf("f"); //-branch_1_cicd_testing
                 if (cEchoCnt==myCnt)
                     myCnt=0;
             } else
