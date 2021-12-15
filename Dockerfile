@@ -57,7 +57,7 @@ ENV PATH /opt/microchip/${TOOLCHAIN}/v${TOOLCHAIN_VERSION}/bin:$PATH
 # DFPs needed for samd21xplp configuration
 # Download and install Microchip.SAMD21_DFP.3.6.133
 RUN curl -fSL -A "Mozilla/4.0" -o /tmp/tmp-pack.atpack \
-         "https://packs.download.microchip.com/Microchip.SAMD21_DFP.3.6.133.atpack" \
+         "https://packs.download.microchip.com/Microchip.SAMD21_DFP.3.5.132.atpack" \
  && mkdir -p /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/3.6.133 \
  && unzip -o /tmp/tmp-pack.atpack -d /opt/microchip/mplabx/v${MPLABX_VERSION}/packs/SAMD21_DFP/3.6.133 \
  && rm /tmp/tmp-pack.atpack
