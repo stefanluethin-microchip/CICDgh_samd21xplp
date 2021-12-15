@@ -23,7 +23,7 @@ RUN dpkg --add-architecture i386 \
 
 
 # Download and install MPLAB X IDE version 5.55
-ENV MPLABX_VERSION 5.55
+ENV MPLABX_VERSION 5.50
 
 RUN curl -fSL -A "Mozilla/4.0" -o /tmp/mplabx-installer.tar \
          "https://ww1.microchip.com/downloads/en/DeviceDoc/MPLABX-v${MPLABX_VERSION}-linux-installer.tar" \
