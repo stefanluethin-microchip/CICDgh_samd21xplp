@@ -19,8 +19,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh('''
-                    echo "check env"
-//                     which xlcm
+                    @echo "check env"
+                    which xlcm
                     echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
                     echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
                 ''')
