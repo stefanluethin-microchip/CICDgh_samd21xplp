@@ -8,19 +8,21 @@ pipeline {
         BUILD_CONFIGURATION = 'samd21xplp'
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
-        MPLABX_P2EXE = ${MPLABX_ROOT}/${MPLABX_V_2_USE}/mplab_platform/bin
+        MPLABX_P2EXE = "${MPLABX_ROOT}"+"/"+"${MPLABX_V_2_USE}"+"/"+"mplab_platform/bin"
          //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/xclm
         MPLABX_XCLM_EXE = ${MPLABX_P2EXE}/bin/xclm
         PRJ_ROOT_P=${env.WORKSPACE}
     }
     agent any
+    
     stages {
         stage('Build') {
             steps {
                 sh('''
                     echo "check env"
-                    which xlcm
-                    echo prj_root_p=${PRJ_ROOT_P}
+//                     which xlcm
+                    echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
+                    echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles',
