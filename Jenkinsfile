@@ -25,7 +25,7 @@ pipeline {
                     echo "###SL: check env"
                     echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
                     echo "###SL: content of prj_path = ${PRJ_ROOT_P}"
-                    ls ${PRJ_ROOT_P}
+                    ls -F ${PRJ_ROOT_P}
                     echo "###SL: license available?"
                     ${MPLABX_XCLM_EXE} -status                    
                    ''')
