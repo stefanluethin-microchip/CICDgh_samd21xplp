@@ -13,7 +13,10 @@ pipeline {
         MPLABX_XCLM_EXE = "${MPLABX_P2EXE}" + "xclm"
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
          //-SL:  which env-variables are known
-        PRJ_ROOT_P="${env.WORKSPACE}"
+        PRJ_NAME="CICDgh_samd21xplp"
+        PRJ_ROOT_P="${env.WORKSPACE}" + "/" + ${PRJ_NAME} + "/firmware"
+        PRJ_X_NAME="${PRJ_NAME}" + ".X"
+        PRJ_SCR_P="${PRJ_ROOT_P}" + "/src"
     }
     agent any
     
@@ -23,11 +26,11 @@ pipeline {
                 sh ('''
                     set +x
                     echo "###SL: check env"
-                    echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
                     echo "###SL: content of prj_path = ${PRJ_ROOT_P}"
                     ls -F ${PRJ_ROOT_P}
                     echo "###SL: license available?"
-                    ${MPLABX_XCLM_EXE} -status                    
+                    ${MPLABX_XCLM_EXE} -status
+                    echo "###SL: PATH = $PATH"
                    ''')
 //                 sh(
 //                     label: 'Generate build makefiles',
