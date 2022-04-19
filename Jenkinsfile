@@ -19,6 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh ('''
+                    set +x
                     echo "check env"
                     echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
                     ${MPLABX_XCLM_EXE} -status
