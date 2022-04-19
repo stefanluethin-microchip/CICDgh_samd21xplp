@@ -14,7 +14,7 @@ pipeline {
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
          //-SL:  which env-variables are known
         PRJ_NAME="CICDgh_samd21xplp"
-        PRJ_ROOT_P="${env.WORKSPACE}" + "/" + ${PRJ_NAME} + "/firmware"
+        PRJ_ROOT_P="${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
         PRJ_X_NAME="${PRJ_NAME}" + ".X"
         PRJ_SCR_P="${PRJ_ROOT_P}" + "/src"
     }
