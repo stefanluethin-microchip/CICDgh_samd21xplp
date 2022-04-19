@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'echo "check env"'
                 sh 'echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"'
-                sh 'which ${MPLABX_XCLM_EXE} -status'
+                sh '${MPLABX_XCLM_EXE} -status'
                 sh 'echo "###SL: prj_root_p = ${PRJ_ROOT_P}"'
 //                 sh(
 //                     label: 'Generate build makefiles',
