@@ -11,8 +11,9 @@ pipeline {
         MPLABX_P2EXE = "${MPLABX_ROOT}"+"/"+"${MPLABX_V_2_USE}"+"/"+"mplab_platform/bin/"
          //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/xclm
         MPLABX_XCLM_EXE = "${MPLABX_P2EXE}" + "xclm"
+         //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
+         //-SL:  which env-variables are known
         PRJ_ROOT_P="${env.WORKSPACE}"
-        currentEnv="${env}"
     }
     agent any
     
@@ -24,9 +25,8 @@ pipeline {
                     echo "###SL: check env"
                     echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
                     echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
-                    echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
                     ${MPLABX_XCLM_EXE} -status
-                    echo "###SL: env = ${currentEnv}"
+                    ls ${PRJ_ROOT_P}
                    ''')
 //                 sh(
 //                     label: 'Generate build makefiles',
