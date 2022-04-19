@@ -11,6 +11,7 @@ pipeline {
         MPLABX_P2EXE = ${MPLABX_ROOT}/&{MPLABX_V_2_USE}/mplab_platform/bin
          //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/xclm
         MPLABX_XCLM_EXE = ${MPLABX_P2EXE}/bin/xclm
+        PRJ_ROOT_P=§{env.WORKSPACE}
     }
     agent any
     stages {
@@ -19,20 +20,21 @@ pipeline {
                 sh('''
                     echo "check env"
                     which xlcm
+                    echo prj_root_p=${PRJ_ROOT_P}
                 ''')
-                sh(
-                    label: 'Generate build makefiles',
-                    script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
-                )
-                sh(
-                    label: 'Running Makefile',
-                    script: """
-                            rm -rf ./build
-                            rm -rf ./dist
-                            make clean
-                            make CONF=${env.BUILD_CONFIGURATION}
-                            """
-                )
+//                 sh(
+//                     label: 'Generate build makefiles',
+//                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
+//                 )
+//                 sh(
+//                     label: 'Running Makefile',
+//                     script: """
+//                             rm -rf ./build
+//                             rm -rf ./dist
+//                             make clean
+//                             make CONF=${env.BUILD_CONFIGURATION}
+//                             """
+//                 )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
 //                       allowEmpty: true
