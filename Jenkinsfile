@@ -18,12 +18,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh '''
-                    echo "check env"
-                    echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
-                    which ${MPLABX_XCLM_EXE} -status
-                    echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
-                '''
+                sh 'echo "check env"'
+                sh 'echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"'
+                sh 'which ${MPLABX_XCLM_EXE} -status'
+                sh 'echo "###SL: prj_root_p = ${PRJ_ROOT_P}"'
 //                 sh(
 //                     label: 'Generate build makefiles',
 //                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
