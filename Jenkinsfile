@@ -24,9 +24,10 @@ pipeline {
                     set +x
                     echo "###SL: check env"
                     echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
-                    echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
-                    ${MPLABX_XCLM_EXE} -status
+                    echo "###SL: content of prj_path = ${PRJ_ROOT_P}"
                     ls ${PRJ_ROOT_P}
+                    echo "###SL: license available?"
+                    ${MPLABX_XCLM_EXE} -status                    
                    ''')
 //                 sh(
 //                     label: 'Generate build makefiles',
