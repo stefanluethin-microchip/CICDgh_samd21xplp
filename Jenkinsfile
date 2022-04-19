@@ -12,6 +12,7 @@ pipeline {
          //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/xclm
         MPLABX_XCLM_EXE = "${MPLABX_P2EXE}" + "xclm"
         PRJ_ROOT_P="${env.WORKSPACE}"
+        currentEnv="${env}"
     }
     agent any
     
@@ -20,10 +21,12 @@ pipeline {
             steps {
                 sh ('''
                     set +x
-                    echo "check env"
+                    echo "###SL: check env"
                     echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
-                    ${MPLABX_XCLM_EXE} -status
                     echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
+                    echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
+                    ${MPLABX_XCLM_EXE} -status
+                    echo "###SL: env = ${currentEnv}"
                    ''')
 //                 sh(
 //                     label: 'Generate build makefiles',
