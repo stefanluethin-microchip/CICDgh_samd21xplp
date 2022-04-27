@@ -5,7 +5,6 @@
 
 pipeline {
     environment {
-        BUILD_CONFIGURATION = "samd21xplp"
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
         MPLABX_EXE = "mplab_ide"
@@ -21,11 +20,14 @@ pipeline {
         XC32_GCC_2_USE = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin/" + "${XC32_GCC_EXE}"       
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
          //-SL:  which env-variables are known
+         //-SL:  eg ${env.WORKSPACE} points to '/var/lib/jenkins/nodes/DEM-LT-M16422u_localJenkinsAgent/workspace/J_test3/'
+         //-SL:   for Node/Agent/Slave/Client 'J_test3' created in Jenkins-Master/-Server
         PRJ_NAME=   "CICDgh_samd21xplp"
-        PRJ_ROOT_P= "${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
-        PRJ_X_NAME= "${PRJ_NAME}" + ".X"
-        PRJ_X_P=    "${PRJ_ROOT_P}" + "${PRJ_X_NAME}"
-        PRJ_SCR_P=  "${PRJ_ROOT_P}" + "/src"        
+         //-SL: path-2-MPLABX-prj.X relative from Jenkins-Workspace as scripts below first cd's into WS
+        PRJ_X_NAME =   "${PRJ_NAME}" + ".X"
+        PRJ_WS_REL_P = "./" + "${PRJ_NAME}" + "/firmware" + "${PRJ_X_NAME}"
+        MPLABX_CFG_N = "samd21xplp"
+        PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
     }
     agent any
     
@@ -40,12 +42,15 @@ pipeline {
                             echo "###SL: WS = ${env.WORKSPACE}"     
                             """
                    )
-//                 sh(
-//                     label: 'Generate build makefiles'
-//                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
-//                     cd ${PRJ_ROOT_P}
-//                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
-//                 )
+                 sh(
+                     label: 'Generate build makefiles'
+                     script: """
+                            cd ${env.WORKSPACE}
+                            //-SL:  (WS)> prjMakefilesGenerator.sh CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
+                            echo "###SL: re-creating makefiles for ${env.PRJ_MK_STR}"
+                            prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
+                            """
+                 )
 //                 sh(
 //                     label: 'Running Makefile',
 //                     script: """
