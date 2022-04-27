@@ -33,7 +33,7 @@ pipeline {
         stage('Build') {
             steps {
                  sh(
-                    label: 'environment check'
+                    label: 'environment check',
                     script: """
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                             echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
