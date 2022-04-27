@@ -21,11 +21,11 @@ pipeline {
         XC32_GCC_2_USE = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin/" + "${XC32_GCC_EXE}"       
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
          //-SL:  which env-variables are known
-        PRJ_NAME="CICDgh_samd21xplp"
-        PRJ_ROOT_P="${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
-        PRJ_X_NAME="${PRJ_NAME}" + ".X"
-        PRJ_X_P="${PRJ_ROOT_P}" + "${PRJ_NAME}" + ".X"
-        PRJ_SCR_P="${PRJ_ROOT_P}" + "/src"
+        PRJ_NAME=   "CICDgh_samd21xplp"
+        PRJ_ROOT_P= "${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
+        PRJ_X_NAME= "${PRJ_NAME}" + ".X"
+        PRJ_X_P=    "${PRJ_ROOT_P}" + "${PRJ_NAME}" + ".X"
+        PRJ_SCR_P=  "${PRJ_ROOT_P}" + "/src"
     }
     agent any
     
@@ -33,7 +33,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh('''
-                    echo "###SL: label: environment check"
                     echo "###SL: mplab:    ${env.MPLABX_EXE_2_USE}"
                     echo "###SL: xclm:     ${env.XC32_GCC_2_USE}"
                     echo "###SL: xc32-gcc: ${env.XC32_GCC_2_USE}"
