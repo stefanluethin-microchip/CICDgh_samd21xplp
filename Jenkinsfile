@@ -43,7 +43,7 @@ pipeline {
                             """
                    )
                  sh(
-                     label: 'Generate build makefiles'
+                     label: 'Generate build makefiles',
                      script: """
                             cd ${env.WORKSPACE}
                             //-SL:  (WS)> prjMakefilesGenerator.sh CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp 
