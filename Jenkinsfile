@@ -46,7 +46,7 @@ pipeline {
                      label: 'Generate build makefiles'
                      script: """
                             cd ${env.WORKSPACE}
-                            //-SL:  (WS)> prjMakefilesGenerator.sh CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
+                            //-SL:  (WS)> prjMakefilesGenerator.sh CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp 
                             echo "###SL: re-creating makefiles for ${env.PRJ_MK_STR}"
                             prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             """
