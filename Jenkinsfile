@@ -32,10 +32,10 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh('''
                     echo "###SL: env check"
                     echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                ''')
+                    echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
+                    echo "###SL: WS = ${env.WORKSPACE}"                
 //                 sh(
 //                     label: 'Generate build makefiles'
 //                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
