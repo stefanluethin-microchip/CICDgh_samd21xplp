@@ -33,17 +33,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh('''
-                    echo "###SL: mplab:    ${env.MPLABX_EXE_2_USE}"
-                    echo "###SL: xclm:     ${env.XC32_GCC_2_USE}"
-                    echo "###SL: xc32-gcc: ${env.XC32_GCC_2_USE}"
-                    echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
-                    echo "###SL: searchpath set to find mplab_ide?"
-                    which ${env.MPLABX_EXE}
-                    echo "###SL: searchpath set to find xclm?"
-                    which ${env.XCLM_EXE}
-                    echo "###SL: searchpath set to find xc32-gcc?"
-                    which ${env.XC32_GCC_EXE}
-                    //-SL-Todo: take action if env-path not set
+                    echo "###SL: env check"
+                    echo "   mplab:    ${env.MPLABX_EXE_2_USE}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles'
