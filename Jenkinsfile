@@ -79,14 +79,13 @@ pipeline {
 //                         echo 'ResultFile does NOT exist'
 //                     }
                          
-//                     script: """
-//                             resultf_n=`find ./dist -name *.elf`
-//                             if [[ "${resultf_n}" != "" ]]; then
-//                                echo "Resultfile ${resultf_n} -> compile successful"
-//                             else
-//                                echo "no resultfile -> compile failed"
-//                             fi
-//                             """
+                     script: """
+                             if [[ "`find ./dist -name *.elf`" != "" ]]; then
+                                echo "Resultfile `find ./dist -name *.elf` -> compile successful"
+                             else
+                                echo "no resultfile -> compile failed"
+                             fi
+                             """
                  )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
