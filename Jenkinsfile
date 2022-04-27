@@ -71,6 +71,16 @@ pipeline {
                              make CONF=${env.MPLABX_CFG_N}
                              """
                  )
+                 sh(
+                     label: 'compile successful?',
+                     script: """
+                             if [[ `find ./dist -name *.elf` != "" ]]; then
+                                echo "Resultfile ${resultf_n}"
+                             else
+                                echo "no resultfile"
+                             fi
+                             """
+                 )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
 //                       allowEmpty: true
