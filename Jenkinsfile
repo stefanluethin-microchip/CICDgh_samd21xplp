@@ -66,6 +66,8 @@ pipeline {
                  sh(
                      label: 'compile = running Makefile',
                      script: """
+                             cd "${env.WORKSPACE}" + "/" + "${env.PRJ_WS_REL_P}"
+                             echo "###SL: current path `pwd`"
                              make clean
                              make CONF=${env.BUILD_CONFIGURATION}
                              """
