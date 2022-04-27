@@ -9,7 +9,6 @@ pipeline {
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
         MPLABX_EXE = "mplab_ide"
-        MPLABX_EXE_2_USE = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${MPLABX_EXE}"
     }
     agent any
     
@@ -18,7 +17,7 @@ pipeline {
             steps {
                 sh('''
                     echo "###SL: env check"
-                    echo "   mplab:    ${env.MPLABX_EXE_2_USE}"
+                    echo "   WS:    ${env.WORKSPACE}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles'
