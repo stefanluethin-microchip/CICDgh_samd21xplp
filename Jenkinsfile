@@ -71,9 +71,9 @@ pipeline {
                              make CONF=${env.MPLABX_CFG_N}
                              """
                  )
-                 stash name: 'build',
-                       includes: 'dist/**/*',
-                       allowEmpty: true
+//                 stash name: 'build',
+//                       includes: 'dist/**/*',
+//                       allowEmpty: true
             } //-end 'steps' in 'stage=build'
         } //-end stage=build
         
