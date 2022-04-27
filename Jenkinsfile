@@ -68,7 +68,7 @@ pipeline {
                              cd "${env.PRJ_WS_REL_P}"
                              echo "###SL: current path `pwd`"
                              make clean
-                             make CONF=${env.MPLABX_CFG_N}
+                             make CONF="${env.MPLABX_CFG_N}"
                              """
                  )
                  sh(
