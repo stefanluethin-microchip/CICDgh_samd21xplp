@@ -43,6 +43,19 @@ pipeline {
                             """
                    )
                  sh(
+                     label: 'cleanup (if needed)',
+                     script: """
+                            cd ${env.WORKSPACE}
+                            rm -rf ./build
+                            rm -rf ./dist
+                            rm -rf ./debug
+                            rm -rf .generated_files/
+                            rm -rf nbproject/Makefile-*
+                            rm -rf nbproject/Package-samd21xplp.bash
+                            rm -rf nbproject/private
+                            """
+                 )
+                 sh(
                      label: 'Generate build makefiles',
                      script: """
                             cd ${env.WORKSPACE}
@@ -50,18 +63,16 @@ pipeline {
                             prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             """
                  )
-//                 sh(
-//                     label: 'Running Makefile',
-//                     script: """
-//                             rm -rf ./build
-//                             rm -rf ./dist
-//                             make clean
-//                             make CONF=${env.BUILD_CONFIGURATION}
-//                             """
-//                 )
-//                 stash name: 'build',
-//                       includes: 'dist/**/*',
-//                       allowEmpty: true
+                 sh(
+                     label: 'compile = running Makefile',
+                     script: """
+                             make clean
+                             make CONF=${env.BUILD_CONFIGURATION}
+                             """
+                 )
+                 stash name: 'build',
+                       includes: 'dist/**/*',
+                       allowEmpty: true
             } //-end 'steps' in 'stage=build'
         } //-end stage=build
         
