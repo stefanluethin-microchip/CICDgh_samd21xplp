@@ -74,7 +74,7 @@ pipeline {
                  sh(
                      label: 'compile successful?',
                      script: """
-                             resultf_n="$(find ./dist -name *.elf)"
+                             resultf_n=\$(find ./dist -name *.elf)
                              if [[ "${resultf_n}" != "" ]]; then
                                 echo "Resultfile ${resultf_n} -> compile successful"
                              else
