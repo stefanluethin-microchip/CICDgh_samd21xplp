@@ -66,10 +66,10 @@ pipeline {
                  sh(
                      label: 'compile = running Makefile',
                      script: """
-                             cd "${env.WORKSPACE}" + "/" + "${env.PRJ_WS_REL_P}"
+                             cd "${env.PRJ_WS_REL_P}"
                              echo "###SL: current path `pwd`"
                              make clean
-                             make CONF=${env.BUILD_CONFIGURATION}
+                             make CONF=${env.MPLABX_CFG_N}
                              """
                  )
                  stash name: 'build',
