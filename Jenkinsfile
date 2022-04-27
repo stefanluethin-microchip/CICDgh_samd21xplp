@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh('''
                     echo "###SL: env check"
-                    echo "###SL: mplab:    ${env.MPLABX_EXE_2_USE}"
+                    echo "###SL: mplab:    ${env.PRJ_X_NAME}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles'
