@@ -5,16 +5,11 @@
 
 pipeline {
     environment {
-        BUILD_CONFIGURATION = 'samd21xplp'
+        BUILD_CONFIGURATION = "samd21xplp"
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
         MPLABX_EXE = "mplab_ide"
-
-        PRJ_NAME=   "CICDgh_samd21xplp"
-        PRJ_ROOT_P= "${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
-        PRJ_X_NAME= "${PRJ_NAME}" + ".X"
-        PRJ_X_P=    "${PRJ_ROOT_P}" + "${PRJ_NAME}" + ".X"
-        PRJ_SCR_P=  "${PRJ_ROOT_P}" + "/src"
+        MPLABX_EXE_2_USE = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${MPLABX_EXE}"
     }
     agent any
     
