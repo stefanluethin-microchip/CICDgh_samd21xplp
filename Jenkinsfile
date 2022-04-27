@@ -33,7 +33,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh('''
-                    //-SLx: label: 'environment check'
+                    echo "###SL: label: 'environment check'"
                     echo "###SL: mplab:    ${env.MPLABX_EXE_2_USE}"
                     echo "###SL: xclm:     ${env.XC32_GCC_2_USE}"
                     echo "###SL: xc32-gcc: ${env.XC32_GCC_2_USE}"
