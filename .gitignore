@@ -12,6 +12,13 @@
 *.map
 *.exp
 
+#-SL: MPLABX files
+*/firmware/*.X/build/
+*/firmware/*.X/dist/
+*/firmware/*.X/.generated_files/
+*/firmware/*.X/nbproject/Makefiles*
+*/firmware/*.X/nbproject/private/
+
 # Precompiled Headers
 *.gch
 *.pch
@@ -50,3 +57,5 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#-eof
