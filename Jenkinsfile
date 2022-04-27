@@ -58,7 +58,6 @@ pipeline {
                  sh(
                      label: 'Generate build makefiles',
                      script: """
-                            //-SL: already in Jenkins-WS, so don't need "cd ${env.WORKSPACE}"
                             echo "###SL: re-creating makefiles for ${env.PRJ_MK_STR}"
                             prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             """
