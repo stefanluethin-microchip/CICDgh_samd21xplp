@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sh('''
                     echo "###SL: env check"
-                    echo "###SL: mplab:    ${env.PRJ_X_NAME}"
+                    echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles'
