@@ -9,6 +9,23 @@ pipeline {
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
         MPLABX_EXE = "mplab_ide"
+         //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/mplab_ide
+        MPLABX_EXE_2_USE = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${MPLABX_EXE}"
+         //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/xclm
+        XCLM_EXE = "xclm"
+        XCLM_EXE_2_USE   = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${XCLM_EXE}"
+         //-SL: /opt/microchip/xc32/v2.50/bin/xc32-gcc
+        XC32_ROOT = "/opt/microchip/xc32"
+        XC32_V_2_USE = "v2.50"
+        XC32_GCC_EXE = "xc32-gcc"
+        XC32_GCC_2_USE = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin/" + "${XC32_GCC_EXE}"       
+         //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
+         //-SL:  which env-variables are known
+        PRJ_NAME=   "CICDgh_samd21xplp"
+        PRJ_ROOT_P= "${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
+        PRJ_X_NAME= "${PRJ_NAME}" + ".X"
+        PRJ_X_P=    "${PRJ_ROOT_P}" + "${PRJ_NAME}" + ".X"
+        PRJ_SCR_P=  "${PRJ_ROOT_P}" + "/src"        
     }
     agent any
     
