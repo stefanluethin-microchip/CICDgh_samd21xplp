@@ -8,14 +8,23 @@ pipeline {
         BUILD_CONFIGURATION = 'samd21xplp'
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
-        MPLABX_P2EXE = "${MPLABX_ROOT}"+"/"+"${MPLABX_V_2_USE}"+"/"+"mplab_platform/bin"
+        MPLABX_EXE = "mplab_ide"
+         //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/mplab_ide
+        MPLABX_EXE_2_USE = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${MPLABX_EXE}"
          //-SL: /opt/microchip/mplabx/v6.00.06.5453/mplab_platform/bin/xclm
-        MPLABX_XCLM_EXE = "${MPLABX_P2EXE}" + "xclm"
+        XCLM_EXE = "xclm"
+        XCLM_EXE_2_USE   = "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + "${XCLM_EXE}"
+         //-SL: /opt/microchip/xc32/v2.50/bin/xc32-gcc
+        XC32_ROOT = "/opt/microchip/xc32"
+        XC32_V_2_USE = "v2.50"
+        XC32_GCC_EXE = "xc32-gcc"
+        XC32_GCC_2_USE = "${XC32_ROOT}" + "/" + "${XC32_V_2_USE}" + "/bin/" + "${XC32_GCC_EXE}"       
          //-SL: see <https://www.jenkins.io/doc/book/pipeline/jenkinsfile/#using-environment-variables>
          //-SL:  which env-variables are known
         PRJ_NAME="CICDgh_samd21xplp"
         PRJ_ROOT_P="${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
         PRJ_X_NAME="${PRJ_NAME}" + ".X"
+        PRJ_X_P="${PRJ_ROOT_P}" + "${PRJ_NAME}" + ".X"
         PRJ_SCR_P="${PRJ_ROOT_P}" + "/src"
     }
     agent any
@@ -24,13 +33,23 @@ pipeline {
         stage('Build') {
             steps {
                 sh('''
-                    echo "check env"
-                    which xlcm
-                    echo "###SL: pipeline-env: ${MPLABX_XCLM_EXE}"
-                    echo "###SL: prj_root_p = ${PRJ_ROOT_P}"
+                    label: 'environment check'
+                    echo "###SL: mplab:    ${env.MPLABX_EXE_2_USE}"
+                    echo "###SL: xclm:     ${env.XC32_GCC_2_USE}"
+                    echo "###SL: xc32-gcc: ${env.XC32_GCC_2_USE}"
+                    echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
+                    echo "###SL: searchpath set to find mplab_ide?"
+                    which ${env.MPLABX_EXE}
+                    echo "###SL: searchpath set to find xclm?"
+                    which ${env.XCLM_EXE}
+                    echo "###SL: searchpath set to find xc32-gcc?"
+                    which ${env.XC32_GCC_EXE}
+                    //-SL-Todo: take action if env-path not set
                 ''')
 //                 sh(
-//                     label: 'Generate build makefiles',
+//                     label: 'Generate build makefiles'
+//                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
+//                     cd ${PRJ_ROOT_P}
 //                     script: "prjMakefilesGenerator.sh -v -f ./@${env.BUILD_CONFIGURATION}"
 //                 )
 //                 sh(
