@@ -22,10 +22,10 @@ pipeline {
          //-SL:  which env-variables are known
          //-SL:  eg ${env.WORKSPACE} points to '/var/lib/jenkins/nodes/DEM-LT-M16422u_localJenkinsAgent/workspace/J_test3/'
          //-SL:   for Node/Agent/Slave/Client 'J_test3' created in Jenkins-Master/-Server
-        PRJ_NAME=   "CICDgh_samd21xplp"
+        PRJ_DIR_N=   "CICDgh_samd21xplp"
          //-SL: path-2-MPLABX-prj.X relative from Jenkins-Workspace as scripts below first cd's into WS
-        PRJ_X_NAME =   "${PRJ_NAME}" + ".X"
-        PRJ_WS_REL_P = "./" + "${PRJ_NAME}" + "/firmware/" + "${PRJ_X_NAME}"
+        PRJ_X_NAME =   "CICDgit_samd21xplp.X"
+        PRJ_WS_REL_P = "./" + "${PRJ_DIR_N}" + "/firmware/" + "${PRJ_X_NAME}"
         MPLABX_CFG_N = "samd21xplp"
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
     }
