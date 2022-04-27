@@ -25,7 +25,7 @@ pipeline {
         PRJ_NAME=   "CICDgh_samd21xplp"
          //-SL: path-2-MPLABX-prj.X relative from Jenkins-Workspace as scripts below first cd's into WS
         PRJ_X_NAME =   "${PRJ_NAME}" + ".X"
-        PRJ_WS_REL_P = "./" + "${PRJ_NAME}" + "/firmware" + "${PRJ_X_NAME}"
+        PRJ_WS_REL_P = "./" + "${PRJ_NAME}" + "/firmware/" + "${PRJ_X_NAME}"
         MPLABX_CFG_N = "samd21xplp"
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
     }
