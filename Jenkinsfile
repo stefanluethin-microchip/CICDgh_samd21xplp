@@ -17,7 +17,6 @@ pipeline {
             steps {
                 sh('''
                     echo "###SL: env check"
-                    echo "   WS:    ${env.WORKSPACE}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles'
