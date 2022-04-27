@@ -24,7 +24,7 @@ pipeline {
         PRJ_NAME=   "CICDgh_samd21xplp"
         PRJ_ROOT_P= "${env.WORKSPACE}" + "/" + "${PRJ_NAME}" + "/firmware"
         PRJ_X_NAME= "${PRJ_NAME}" + ".X"
-        PRJ_X_P=    "${PRJ_ROOT_P}" + "${PRJ_NAME}" + ".X"
+        PRJ_X_P=    "${PRJ_ROOT_P}" + "${PRJ_X_NAME}"
         PRJ_SCR_P=  "${PRJ_ROOT_P}" + "/src"        
     }
     agent any
@@ -34,7 +34,8 @@ pipeline {
             steps {
                 sh('''
                     echo "###SL: env check"
-                    echo "###SL: WS = ${env.WORKSPACE}"
+                    echo "###SL: mplab:    ${env.MPLABX_EXE_2_USE}"
+                    echo "###SL: prj-p:    ${env.PRJ_X_P}"
                 ''')
 //                 sh(
 //                     label: 'Generate build makefiles'
