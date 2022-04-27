@@ -73,14 +73,19 @@ pipeline {
                  )
                  sh(
                      label: 'compile successful?',
-                     script: """
-                             resultf_n=`find ./dist -name *.elf`
-                             if [[ "${resultf_n}" != "" ]]; then
-                                echo "Resultfile ${resultf_n} -> compile successful"
-                             else
-                                echo "no resultfile -> compile failed"
-                             fi
-                             """
+                     if (fileExists('./dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf')) {
+                         echo 'ResultFile exists'
+                     } else {
+                         echo 'ResultFile does NOT exist'
+                     }
+//                     script: """
+//                             resultf_n=`find ./dist -name *.elf`
+//                             if [[ "${resultf_n}" != "" ]]; then
+//                                echo "Resultfile ${resultf_n} -> compile successful"
+//                             else
+//                                echo "no resultfile -> compile failed"
+//                             fi
+//                             """
                  )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
