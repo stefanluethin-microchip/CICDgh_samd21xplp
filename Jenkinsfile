@@ -22,10 +22,10 @@ pipeline {
          //-SL:  which env-variables are known
          //-SL:  eg ${env.WORKSPACE} points to '/var/lib/jenkins/nodes/DEM-LT-M16422u_localJenkinsAgent/workspace/J_test3/'
          //-SL:   for Node/Agent/Slave/Client 'J_test3' created in Jenkins-Master/-Server
-        PRJ_NAME=   "CICDgh_samd21xplp"
+        PRJ_DIR_N=   "CICDgh_samd21xplp"
          //-SL: path-2-MPLABX-prj.X relative from Jenkins-Workspace as scripts below first cd's into WS
-        PRJ_X_NAME =   "${PRJ_NAME}" + ".X"
-        PRJ_WS_REL_P = "./" + "${PRJ_NAME}" + "/firmware" + "${PRJ_X_NAME}"
+        PRJ_X_NAME =   "CICDgit_samd21xplp.X"
+        PRJ_WS_REL_P = "./" + "${PRJ_DIR_N}" + "/firmware/" + "${PRJ_X_NAME}"
         MPLABX_CFG_N = "samd21xplp"
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
     }
@@ -43,23 +43,50 @@ pipeline {
                             """
                    )
                  sh(
-                     label: 'Generate build makefiles'
+                     label: 'cleanup (if needed)',
                      script: """
                             cd ${env.WORKSPACE}
-                            //-SL:  (WS)> prjMakefilesGenerator.sh CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp 
+                            rm -rf ./build
+                            rm -rf ./dist
+                            rm -rf ./debug
+                            rm -rf .generated_files/
+                            rm -rf nbproject/Makefile-*
+                            rm -rf nbproject/Package-samd21xplp.bash
+                            rm -rf nbproject/private
+                            """
+                 )
+                 sh(
+                     label: 'Generate build makefiles',
+                     script: """
                             echo "###SL: re-creating makefiles for ${env.PRJ_MK_STR}"
                             prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             """
                  )
-//                 sh(
-//                     label: 'Running Makefile',
-//                     script: """
-//                             rm -rf ./build
-//                             rm -rf ./dist
-//                             make clean
-//                             make CONF=${env.BUILD_CONFIGURATION}
-//                             """
-//                 )
+                 sh(
+                     label: 'compile = running Makefile',
+                     script: """
+                             cd "${env.PRJ_WS_REL_P}"
+                             echo "###SL: current path `pwd`"
+                             make clean
+                             make CONF="${env.MPLABX_CFG_N}"
+                             """
+                 )
+                 sh(
+                     label: 'compile successful?',
+//                     if (fileExists('./dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf')) {
+//                         echo 'ResultFile exists'
+//                     } else {
+//                         echo 'ResultFile does NOT exist'
+//                     }
+                         
+                     script: """
+                             if [[ "`find ./dist -name *.elf`" != "" ]]; then
+                                echo "Resultfile `find ./dist -name *.elf` -> compile successful"
+                             else
+                                echo "no resultfile -> compile failed"
+                             fi
+                             """
+                 )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
 //                       allowEmpty: true
