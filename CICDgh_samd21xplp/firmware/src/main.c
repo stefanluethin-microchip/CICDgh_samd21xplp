@@ -37,13 +37,19 @@
 volatile uint32_t myCnt;
 #define cEchoCnt 10
 
+volatile uint32_t u32CntLEDBlink;
+volatile uint32_t u32CntUARTtxCh1, u32CntUARTtxCh2;
+
+
 int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
     printf("START L1...");
 
-    myCnt=0; //-SL    
+    myCnt=0; //-SL
+    u32CntLEDBlink=0;
+    u32CntUARTtxCh1=0; u32CntUARTtxCh2=0;
     SYSTICK_TimerStart(); //-SL: start sysTmr
 
     while ( true )
@@ -54,19 +60,23 @@ int main ( void )
         if(SYSTICK_TimerPeriodHasExpired())
         {
             LED_Toggle();
+            u32CntLEDBlink++;
         
             myCnt++;
             if(cEchoCnt/2>=myCnt)
             {
                 printf("a");
+                u32CntUARTtxCh1++;
             } else if ((cEchoCnt/2<myCnt) & (cEchoCnt>=myCnt))
             {
                 printf("b");
+                u32CntUARTtxCh2++;
                 if (cEchoCnt==myCnt)
                     myCnt=0;
             } else
                 printf("ERROR1");
         }
+        //-add code to check SW1=pressed to jump to endOfTest()
     }
 
     /* Execution should not come here during normal operation */
