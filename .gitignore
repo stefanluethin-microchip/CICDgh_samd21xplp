@@ -16,7 +16,7 @@
 */firmware/*.X/build/
 */firmware/*.X/dist/
 */firmware/*.X/.generated_files/
-*/firmware/*.X/nbproject/Makefiles*
+*/firmware/*.X/nbproject/Makefile-*
 */firmware/*.X/nbproject/private/
 
 # Precompiled Headers
