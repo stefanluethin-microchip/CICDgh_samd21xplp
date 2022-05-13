@@ -30,7 +30,8 @@ pipeline {
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         SCR_ELF_TEST_N = "result_check.sh"
-        ELF_TEST_P = "${PRJ_WS_REL_P}" + "/" + "result_check.sh"
+        ELF_TEST_P = "${PRJ_WS_REL_P}" + "/"
+        ELF_TEST_SCR = "${ELF_TEST_P}" + "result_check.sh"
     }
     agent any
     
@@ -76,20 +77,9 @@ pipeline {
                  )
                  sh(
                      label: 'compile successful?',
-//                     if (fileExists('./dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf')) {
-//                         echo 'ResultFile exists'
-//                     } else {
-//                         echo 'ResultFile does NOT exist'
-//                     }
-//                   //-v2  
-//                     if [[ "`find ./dist -name *.elf`" != "" ]]; then
-//                        echo "Resultfile `find ./dist -name *.elf` -> compile successful"
-//                     else
-//                        echo "no resultfile -> compile failed"
-//                     fi
                      script: """
                             echo "###SL:compile successful?"
-                            ${ELF_TEST_P}
+                            ${ELF_TEST_SCR}
                             """
                  )
 //                 stash name: 'build',
