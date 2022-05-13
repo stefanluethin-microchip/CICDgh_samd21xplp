@@ -77,10 +77,7 @@ pipeline {
                  )
                  sh(
                      label: 'compile successful?',
-                     script: """
-                            echo "###SL:compile successful?"
-                            //${ELF_TEST_SCR}
-                            """
+                     ${ELF_TEST_SCR}
                  )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
