@@ -29,9 +29,7 @@ pipeline {
         MPLABX_CFG_N = "samd21xplp"
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
          //-SL: simple bash-scrp to find *.elf-file and print path+name
-        SCR_ELF_TEST_N = "result_check.sh"
-        ELF_TEST_P = "${PRJ_WS_REL_P}" + "/"
-        ELF_TEST_SCR = "${ELF_TEST_P}" + "result_check.sh"
+        ELF_TEST_SCR = "./" + "result_check.sh"
     }
     agent any
     
