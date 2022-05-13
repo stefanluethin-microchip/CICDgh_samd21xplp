@@ -1,4 +1,6 @@
-#-SL: mdb.bat-cmd file for prj 'C:\mchp\mTools\github\CICDgh_samd21xplp_test2\CICDgh_samd21xplp_test2\firmware'
+#-SL: mdb.bat-cmd file for prj 'C:\mchp\mTools\github\CICDgh_samd21xplp\CICDgh_samd21xplp\'
+#-                                                                          |-firmware\
+#-                                                                          |-mdb\
 #-SL: call from MPLABX-prj-dir: 
 #-   '<p>\CICDgh_samd21xplp_test2\firmware\CICDgit_samd21xplp_test2.X\'
 #-SL:  with (PATH=...C:\Program Files\Microchip\MPLABX\v6.00\mplab_platform\bin)
@@ -7,7 +9,8 @@ device ATSAMD21J18A
 set communication.interface swd 
 hwtool EDBG 
 
-program .\dist\samd21xplp\production\CICDgit_samd21xplp_test2.X.production.elf
+
+program .\firmware\CICDgit_samd21xplp.X\dist\samd21xplp\production\CICDgit_samd21xplp.X.production.elf
 
 #-runs FW as is, so
 #-  a) LEDtoggle@1Hz
@@ -19,7 +22,7 @@ program .\dist\samd21xplp\production\CICDgit_samd21xplp_test2.X.production.elf
 #-      -) jumps into testEnd() 
 #-      -) prints "testEnd with finalLedCnt=$finalLedCnt" with value of global 'finalLedCnt' 
 #-      -) and loops there
-run
+#run
 
 #-SL: cmds for quick usage
 echo - run -
