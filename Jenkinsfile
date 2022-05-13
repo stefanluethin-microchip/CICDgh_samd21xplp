@@ -78,7 +78,8 @@ pipeline {
                  sh(
                      label: 'compile successful?',
                      script: """
-                              ${ELF_TEST_SCR}
+                             cd "${env.PRJ_WS_REL_P}"
+                             ${ELF_TEST_SCR}
                              """
                  )
 //                 stash name: 'build',
