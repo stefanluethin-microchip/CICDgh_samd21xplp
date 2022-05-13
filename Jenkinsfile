@@ -28,6 +28,9 @@ pipeline {
         PRJ_WS_REL_P = "./" + "${PRJ_DIR_N}" + "/firmware/" + "${PRJ_X_NAME}"
         MPLABX_CFG_N = "samd21xplp"
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
+         //-SL: simple bash-scrp to find *.elf-file and print path+name
+        SCR_ELF_TEST_N = "result_check.sh"
+        ELF_TEST_P = "${PRJ_DIR_N}" + "/" + "result_check.sh"
     }
     agent any
     
@@ -78,14 +81,16 @@ pipeline {
 //                     } else {
 //                         echo 'ResultFile does NOT exist'
 //                     }
-                         
+//                   //-v2  
+//                     if [[ "`find ./dist -name *.elf`" != "" ]]; then
+//                        echo "Resultfile `find ./dist -name *.elf` -> compile successful"
+//                     else
+//                        echo "no resultfile -> compile failed"
+//                     fi
                      script: """
-                             if [[ "`find ./dist -name *.elf`" != "" ]]; then
-                                echo "Resultfile `find ./dist -name *.elf` -> compile successful"
-                             else
-                                echo "no resultfile -> compile failed"
-                             fi
-                             """
+                            echo "###SL:compile successful?"
+                            ${ELF_TEST_P}
+                            """
                  )
 //                 stash name: 'build',
 //                       includes: 'dist/**/*',
