@@ -35,51 +35,77 @@
 // *****************************************************************************
 //-SL:
 volatile uint32_t myCnt;
+volatile uint32_t finalLedCnt;
 #define cEchoCnt 10
+#define PRESSED  0
+#define RELEASED 1
+volatile bool sysTickTmrExFlag;
 
-volatile uint32_t u32CntLEDBlink;
-volatile uint32_t u32CntUARTtxCh1, u32CntUARTtxCh2;
+char charArray[3] = {'b','c','d'};
+volatile uint32_t char2prntIdx; //- index for 'charArray'
+void testEnd(void);
 
+
+void sysTickTimeout_handler(uintptr_t context)
+{
+	sysTickTmrExFlag=true;
+}
 
 int main ( void )
 {
     /* Initialize all modules */
     SYS_Initialize ( NULL );
-    printf("START L1...");
+    printf("\n\r");
+    printf("\n\r START CICDtesting ...");
 
-    myCnt=0; //-SL
-    u32CntLEDBlink=0;
-    u32CntUARTtxCh1=0; u32CntUARTtxCh2=0;
-    SYSTICK_TimerStart(); //-SL: start sysTmr
+     //-SL: inits
+    myCnt=0; //-SL: central counter
+    finalLedCnt=0;
+    sysTickTmrExFlag=false; //-SL: SysTickWrap-event flag
+     //-SL: SW0 defined as GPIO-In but still need to call this fct to enable In
+    SW0_InputEnable();
+    char2prntIdx=0; //- default char-to-print = 'b'
 
+    SYSTICK_TimerStart();
+    SYSTICK_TimerCallbackSet(&sysTickTimeout_handler, (uintptr_t) NULL);
+    
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */
-        //SYS_Tasks ( );       //-SL: for csp-level app empty
-        //-SL: polling sysTmr=expired flag        
-        if(SYSTICK_TimerPeriodHasExpired())
+        if(sysTickTmrExFlag)
         {
+            sysTickTmrExFlag=false;
             LED_Toggle();
-            u32CntLEDBlink++;
+            finalLedCnt++;
         
             myCnt++;
             if(cEchoCnt/2>=myCnt)
             {
                 printf("a");
-                u32CntUARTtxCh1++;
             } else if ((cEchoCnt/2<myCnt) & (cEchoCnt>=myCnt))
             {
-                printf("b");
-                u32CntUARTtxCh2++;
+                //printf("b");
+                printf("%c",charArray[char2prntIdx]);
                 if (cEchoCnt==myCnt)
                     myCnt=0;
             } else
                 printf("ERROR1");
         }
-        //-add code to check SW1=pressed to jump to endOfTest()
+        
+        if(SW0_Get() == PRESSED)
+        {
+            testEnd();
+        }
     }
 
     /* Execution should not come here during normal operation */
 
     return ( EXIT_FAILURE );
+}
+
+void testEnd(void)
+{
+    printf("\n\r testEnd with finalLedCnt=%d\n\r ",(int)finalLedCnt);
+    printf("\n\r");
+    while(1){}
 }
