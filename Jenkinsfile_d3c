@@ -34,11 +34,14 @@ pipeline {
     }
     
     //agent any
+     //- use same label for all stages
+    agent {label 'DEM-LT-M16422u_localLnxPC'}
     
     stages {
-        agent {label 'DEM-LT-M16422u_localLnxPC'}
         
         stage('Build') {
+//            agent {label 'DEM-LT-M16422u_localLnxPC'}
+            
             steps {
                  sh(
                     label: 'environment check',
@@ -89,14 +92,14 @@ pipeline {
         } //-end stage=build       
 
         stage('HWtest_mdbbat') {
-            agent {
-                label 'DEM-LT-M16422u_localLnxPC'
-                //dockerfile  {
-                //    label 'docker'
-                //    filename 'Dockerfile'
-                //    registryUrl "https://hub.docker.com/"
-                //}
-            }
+//           agent {
+//               label 'DEM-LT-M16422u_localLnxPC'
+//               //dockerfile  {
+//               //    label 'docker'
+//               //    filename 'Dockerfile'
+//               //    registryUrl "https://hub.docker.com/"
+//               //}
+//           }
             environment {
                  //-paths (Lnx-style with '/' instead of '\'!) relativ from Jenkins-WS:
                  //-    CICDgh_samd21xplp/
