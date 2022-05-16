@@ -16,8 +16,11 @@ hwtool EDBG
 #-lin-path with '/' as directory-separator
 program ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X/dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf
 
+break testEnd
+reset
 run
-wait 10000 #-in msec
+#-in msec (don't put that command behind the cmd - mdbbat interprets it and will never stop!)
+wait 8000
 halt
 quit
 
