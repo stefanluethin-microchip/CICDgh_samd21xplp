@@ -25,7 +25,8 @@ run
 #-in msec (don't put that command behind the cmd - mdbbat interprets it and will never stop!)
 wait 8000
 halt
-quit
+
+#-print test-variables and then quit
 
 #-runs FW as is, so
 #-  a) LEDtoggle@1Hz
@@ -37,12 +38,12 @@ quit
 #-      -) jumps into testEnd() 
 #-      -) prints "testEnd with finalLedCnt=$finalLedCnt" with value of global 'finalLedCnt' 
 #-      -) and loops there
-#run
-
-#-SL: cmds for quick usage
-echo - run -
-echo - reset -
-echo - halt -
 echo - print myCnt -
 echo - print char2prntIdx -
 echo - write /p char2prntIdx 0 #0->'b', 1->'c', 2->'d' -
+print char2prntIdx
+print finalLedCnt
+
+
+#-quit mdb.bat-run
+quit
