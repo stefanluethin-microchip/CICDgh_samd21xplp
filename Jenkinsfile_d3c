@@ -49,7 +49,8 @@ pipeline {
                             echo "Running Jenkins-Pipeline ${env.DEMO_V}"
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                             echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
-                            echo "###SL: WS = ${env.WORKSPACE}"     
+                            echo "###SL: WS = ${env.WORKSPACE}"
+                            echo "###SL: current path `pwd`"
                             """
                    )
                  sh(
@@ -93,7 +94,6 @@ pipeline {
 
         stage('HWtest_mdbbat') {
 //           agent {
-//               label 'DEM-LT-M16422u_localLnxPC'
 //               //dockerfile  {
 //               //    label 'docker'
 //               //    filename 'Dockerfile'
@@ -129,7 +129,7 @@ pipeline {
                     script: """
                             echo "###SL: current path `pwd`"
                             echo "###SL: run ${env.MDBBAT_SCRIPT_F} with ${env.MDBBAT_ELF2USE_P_N}"
-                            mdb.sh ${env.MDBBAT_SCRIPT_F}
+                            mdb.sh ${env.MDBBAT_SCRIPT_F} | tee ${MDBBAT_SCRIPT_N}--log
                             """
                 )
             }
