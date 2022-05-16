@@ -6,7 +6,10 @@
 #-SL:  with (PATH=...C:\Program Files\Microchip\MPLABX\v6.00\mplab_platform\bin)
 #-SL:  (DOS: CICDgit_samd21xplp_test2.X)> mdb.bat ..\..\mdb\CICDgh_samd21xplp_test2_mdbbat.txt
 device ATSAMD21J18A
-set communication.interface swd 
+set system.disableerrormsg true
+set system.disableoutput true
+set system.yestoalldialog true
+set communication.interface swd
 hwtool EDBG 
 
 #- relative path from "Jenkins-WS: CICDgh_samd21xplp" to 'elf':
