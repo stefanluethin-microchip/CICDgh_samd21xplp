@@ -32,9 +32,12 @@ pipeline {
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
     }
-    agent any
+    
+    //agent any
     
     stages {
+        agent {label 'DEM-LT-M16422u_localLnxPC'}
+        
         stage('Build') {
             steps {
                  sh(
@@ -128,6 +131,8 @@ pipeline {
                 )
             }
         } //-end 'stage: HWtest_mdbbat'
+ 
+ 
     } //-end 'stages'
     
     post {
