@@ -40,8 +40,6 @@ pipeline {
                  sh(
                     label: 'environment check',
                     script: """
-                             //-turn OFF shell-echo
-                            set +x
                             echo "========================================================================"
                             echo "Running Jenkins-Pipeline ${env.DEMO_V}"
                             echo "========================================================================"
@@ -85,8 +83,6 @@ pipeline {
                              cd "${env.PRJ_WS_REL_P}"
                              ${ELF_TEST_SCR}
                              """
-                             //-turn ON shell-echo
-                            set -x
                  )
             } //-end 'steps' in 'stage=build'
         } //-end stage=build        
