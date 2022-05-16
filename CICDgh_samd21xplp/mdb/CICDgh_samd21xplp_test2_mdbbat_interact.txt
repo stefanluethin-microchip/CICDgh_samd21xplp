@@ -1,0 +1,37 @@
+#-SL: mdb.bat-cmd file for prj 'C:\mchp\mTools\github\CICDgh_samd21xplp\CICDgh_samd21xplp\'
+#-                                                                          |-firmware\
+#-                                                                          |-mdb\
+#-SL: call from MPLABX-prj-dir: 
+#-   '<p>\CICDgh_samd21xplp_test2\firmware\CICDgit_samd21xplp_test2.X\'
+#-SL:  with (PATH=...C:\Program Files\Microchip\MPLABX\v6.00\mplab_platform\bin)
+#-SL:  (DOS: CICDgit_samd21xplp_test2.X)> mdb.bat ..\..\mdb\CICDgh_samd21xplp_test2_mdbbat.txt
+device ATSAMD21J18A
+set communication.interface swd 
+hwtool EDBG 
+
+#- relative path from "Jenkins-WS: CICDgh_samd21xplp" to 'elf':
+#-   
+#-win-path with '\' as directory-separator
+#program .\CICDgh_samd21xplp\firmware\CICDgit_samd21xplp.X\dist\samd21xplp\production\CICDgit_samd21xplp.X.production.elf
+#-lin-path with '/' as directory-separator
+program ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X/dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf
+
+#-runs FW as is, so
+#-  a) LEDtoggle@1Hz
+#-  b) UARTTX ch1='a' and ch2='b'
+#-  ->can 'halt' and change ch2 
+#-      ='c' with 'write /p char2prntIdx 1'
+#-      ='d' with 'write /p char2prntIdx 2'
+#-  ->can stop exec by pressing SW0, which 
+#-      -) jumps into testEnd() 
+#-      -) prints "testEnd with finalLedCnt=$finalLedCnt" with value of global 'finalLedCnt' 
+#-      -) and loops there
+#run
+
+#-SL: cmds for quick usage
+echo - run -
+echo - reset -
+echo - halt -
+echo - print myCnt -
+echo - print char2prntIdx -
+echo - write /p char2prntIdx 0 #0->'b', 1->'c', 2->'d' -
