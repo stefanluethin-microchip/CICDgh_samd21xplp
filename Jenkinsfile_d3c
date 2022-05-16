@@ -119,7 +119,7 @@ pipeline {
                 MDBBAT_SCRIPT_N = "${MDBBAT_SCR}" + ".txt"
                 MDBBAT_SCRIPT_F = "${MDBBAT_SCRIPT_P}" + "/" + "${MDBBAT_SCRIPT_N}"
                 MDBBAT_LOG_N    = "${MDBBAT_SCR}" + ".log"
-                MDBBAT_LOG_F    = ${MDBBAT_SCRIPT_P}" + "/" + "${MDBBAT_LOG_N}"
+                MDBBAT_LOG_F    = "${MDBBAT_SCRIPT_P}" + "/" + "${MDBBAT_LOG_N}"
                 COMP_TYPE       = "production"
                 //-                         <prj.X>/dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf
                 //-                         <prj.X>        /dist/      samd21xplp/           production/   CICDgit_samd21xplp.X   .   production      .     elf
