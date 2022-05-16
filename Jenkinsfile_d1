@@ -5,7 +5,7 @@
 
 pipeline {
     environment {
-        DEMO = "demo_simple_d1"
+        DEMO_V = "demo_simple_d1"
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.00.06.5453"
         MPLABX_EXE = "mplab_ide"
@@ -40,6 +40,7 @@ pipeline {
                  sh(
                     label: 'environment check',
                     script: """
+                            echo "Running ${env.DEMO_V}"
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                             echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
                             echo "###SL: WS = ${env.WORKSPACE}"     
