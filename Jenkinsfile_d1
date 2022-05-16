@@ -40,7 +40,7 @@ pipeline {
                  sh(
                     label: 'environment check',
                     script: """
-                            echo "Running ${env.DEMO_V}"
+                            echo "Running Jenkins-Pipeline ${env.DEMO_V}"
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                             echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
                             echo "###SL: WS = ${env.WORKSPACE}"     
