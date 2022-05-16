@@ -114,9 +114,12 @@ pipeline {
                  //-        |-LICENSE
                  //-        |-.gitignore
                  //-        |-README.md                 
-                MDBBAT_SCRIPT_P = "./" + "${PRJ_DIR_N}" + "/" + "mdb"               
-                MDBBAT_SCRIPT_N = 'CICDgh_samd21xplp_test2_mdbbat.txt'
+                MDBBAT_SCRIPT_P = "./" + "${PRJ_DIR_N}" + "/" + "mdb"              
+                MDBBAT_SCR = 'CICDgh_samd21xplp_test2_mdbbat'
+                MDBBAT_SCRIPT_N = "${MDBBAT_SCR}" + ".txt"
                 MDBBAT_SCRIPT_F = "${MDBBAT_SCRIPT_P}" + "/" + "${MDBBAT_SCRIPT_N}"
+                MDBBAT_LOG_N    = "${MDBBAT_SCR}" + ".log"
+                MDBBAT_LOG_F    = ${MDBBAT_SCRIPT_P}" + "/" + "${MDBBAT_LOG_N}"
                 COMP_TYPE       = "production"
                 //-                         <prj.X>/dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf
                 //-                         <prj.X>        /dist/      samd21xplp/           production/   CICDgit_samd21xplp.X   .   production      .     elf
@@ -129,7 +132,7 @@ pipeline {
                     script: """
                             echo "###SL: current path `pwd`"
                             echo "###SL: run ${env.MDBBAT_SCRIPT_F} with ${env.MDBBAT_ELF2USE_P_N}"
-                            mdb.sh ${env.MDBBAT_SCRIPT_F} | tee ${MDBBAT_SCRIPT_N}--log
+                            mdb.sh ${env.MDBBAT_SCRIPT_F} | tee ${MDBBAT_LOG_F}
                             """
                 )
                 sh(
@@ -137,7 +140,7 @@ pipeline {
                     script: """
                             echo "###SL: current path `pwd`"
                             echo "###SL: mdb-run result check - simple cat logfile"
-                            cat ${MDBBAT_SCRIPT_N}--log
+                            cat ${MDBBAT_LOG_F}
                             """
                 )
             }
