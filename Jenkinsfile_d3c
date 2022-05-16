@@ -125,11 +125,19 @@ pipeline {
             }
             steps {
                 sh(
-                    label: 'Run MDB script on simulator',
+                    label: 'Run on HW with MDB',
                     script: """
                             echo "###SL: current path `pwd`"
                             echo "###SL: run ${env.MDBBAT_SCRIPT_F} with ${env.MDBBAT_ELF2USE_P_N}"
                             mdb.sh ${env.MDBBAT_SCRIPT_F} | tee ${MDBBAT_SCRIPT_N}--log
+                            """
+                )
+                sh(
+                    label: 'Check MDB run resultlog',
+                    script: """
+                            echo "###SL: current path `pwd`"
+                            echo "###SL: mdb-run result check - simple cat logfile"
+                            cat ${MDBBAT_SCRIPT_N}--log
                             """
                 )
             }
