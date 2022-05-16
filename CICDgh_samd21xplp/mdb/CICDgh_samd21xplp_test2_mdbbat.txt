@@ -9,8 +9,17 @@ device ATSAMD21J18A
 set communication.interface swd 
 hwtool EDBG 
 
+#- relative path from "Jenkins-WS: CICDgh_samd21xplp" to 'elf':
+#-   
+#-win-path with '\' as directory-separator
+#program .\CICDgh_samd21xplp\firmware\CICDgit_samd21xplp.X\dist\samd21xplp\production\CICDgit_samd21xplp.X.production.elf
+#-lin-path with '/' as directory-separator
+program ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X/dist/samd21xplp/production/CICDgit_samd21xplp.X.production.elf
 
-program .\firmware\CICDgit_samd21xplp.X\dist\samd21xplp\production\CICDgit_samd21xplp.X.production.elf
+run
+wait 10000 #-in msec
+halt
+quit
 
 #-runs FW as is, so
 #-  a) LEDtoggle@1Hz
