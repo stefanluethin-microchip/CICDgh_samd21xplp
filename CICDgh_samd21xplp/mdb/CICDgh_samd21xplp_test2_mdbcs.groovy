@@ -28,8 +28,7 @@ class myTest {
         returnValue = a | b | c | d
     } //- end 'byte2long()'
 
-     //-class variables 
-    {
+      //-class variables 
     def Debugger debugger = null;
     String MODE2USE = "debug"
     String DEV2USE = "ATSAMD21J18A"
@@ -41,24 +40,22 @@ class myTest {
     Boolean CONN_MODE = true
              
      //- elf-2-load with absolute path    
-    //-prj: C:\mchp\mTools\github\CICDgh_samd21xplp_test2\CICDgh_samd21xplp_test2\firmware\CICDgit_samd21xplp_test2.X
-    //-elf: C:\mchp\mTools\github\CICDgh_samd21xplp_test2\CICDgh_samd21xplp_test2\firmware\CICDgit_samd21xplp_test2.X\
-    //-          \dist\samd21xplp\production\CICDgit_samd21xplp_test2.X.production.elf
-    String PRJ_ROOT_ABS_P = "C:\\mchp\\mTools\\github\\CICDgh_samd21xplp_test2"
-    String PJR_N = "CICDgh_samd21xplp_test2"
-    String MPLAB_PRJ_N = "CICDgit_samd21xplp_test2.X"
+    //-prj: C:\mchp\Seminars\2022\220516_cicd\FW\CICDgh_samd21xplp\CICDgh_samd21xplp\firmware\CICDgit_samd21xplp.X\
+    //-elf:     dist\samd21xplp\production\CICDgit_samd21xplp.X.production.elf
+    String PRJ_ROOT_ABS_P = "C:\\mchp\\Seminars\\2022\\220516_cicd\\FW\\CICDgh_samd21xplp"
+    String PJR_N = "CICDgh_samd21xplp"
+    String MPLAB_PRJ_N = "CICDgit_samd21xplp.X"
     String PRJ_P = PRJ_ROOT_ABS_P + "\\" + PJR_N + "\\" + "firmware" + "\\" + MPLAB_PRJ_N
     String MPLAB_CFG_N = "samd21xplp"
     String ELF_P = PRJ_P + "\\" + "dist" + "\\" + MPLAB_CFG_N + "\\" + MODE2USE + "\\"
-     //-CICDgit_samd21xplp_test2.X.production.elf
+     //-CICDgit_samd21xplp.X.production.elf
     String ELF_NAME = MPLAB_PRJ_N + "." + MODE2USE + ".elf"
     String ELF2USE= ELF_P + "\\" + ELF_NAME
      //-regression variables
-    def REGR_LED_MAX = 10
+    def REGR_LED_MAX = 14
     def REGR_LED_THR = REGR_LED_MAX/2
     def LED_CNT_MOD  = 10
-    //-end variables 
-    }
+      //-end variables 
   
     static void main(args) {
         new myTest().run();
@@ -85,18 +82,29 @@ class myTest {
             debugger.loadFile(ELF2USE);
             debugger.program();
             
-             //-############## start test ##############-//
+             //-################################################-//
+             //-############## start test (1.run) ##############-//
+             //-################################################-//
              //-run for random-num of millis
             Random randVal = new Random()
-            int val3 = randVal.nextInt(10)
+            int val3 = randVal.nextInt(10) //-so we at least run 3s
             int randMillis = val3*1000
-            println("########### Performing test - running " + randMillis + " and then halt");
+            println("");
+            println("");
+            println("");
+            println("============================================================================");
+            println("     ########### Performing test (1.run) -> running " + val3 + "sec and then halt");
+            println("");
             debugger.run();
             debugger.sleep(randMillis);
             debugger.halt();
             while (debugger.isRunning()) {};
             def pc = debugger.getPC();
             println("########### Halted at: 0x" + Long.toHexString(pc));
+
+             //-################################################-//
+             //-############## start test (2.run) ##############-//
+             //-################################################-//
 
              //-############## regression goal #################-//
              //-solve mdb.bat-limit 'interpreting output'
@@ -108,7 +116,7 @@ class myTest {
              //-  =1 -> ch2='c' if '0               < $(finalLedCnt)%10 < $(REGR_LED_THR)' (== finalLedCnt=0-4)
              //-  =2 -> ch2='d' if '$(REGR_LED_THR) < $(finalLedCnt)%10 < $(REGR_LED_MAX)' (== finalLedCnt=5-9)
 
-             //-############## regression loop #################-//
+             //-############## regression loop (2.run) #################-//
              //-after 'random-milli-sec' run, halt and 
              //- read current value of global variable 'char2prntIdx'
             String char2prntIdxSymbStr = "char2prntIdx";
@@ -149,7 +157,15 @@ class myTest {
             
             
              //-new 'char2prntIdx' written, so can 'continue'/'reset+run' 2.time again for random millis
-            int rand2Millis = (randVal.nextInt(10))*1000
+            int val4 = (1 + randVal.nextInt(10)) //-so we at least run 3s           
+            int rand2Millis = val4*1000            
+            println("");
+            println("");
+            println("");
+            println("============================================================================");
+            println("     ########### Performing test (2.run) -> running " + val4 + "sec and then halt");
+            println("");
+
             debugger.run();
             debugger.sleep(rand2Millis);
             debugger.halt();
@@ -161,6 +177,14 @@ class myTest {
             def testEndAddr = debugger.getSymbolAddress(testEndSymb)
             debugger.setPC(testEndAddr)
             
+             //-get final result of 'finalLedCnt'
+            debugger.readFileRegisters(finalLedCntAddr, finalLedCntBuf.length, finalLedCntBuf);
+            finalLedCntVal = byte2long(finalLedCntBuf);
+            println("########### Address of \"" + finalLedCntSymbStr + "\": 0x" + Long.toHexString(finalLedCntAddr) + " Value : " + finalLedCntVal);
+
+             //-finally erase target for a clean wrapup
+            //debugger.erase();
+            
              //-finish up 
             println "";
             println("##### ========================================");
@@ -169,7 +193,7 @@ class myTest {
             // Tidy up
            debugger.disconnect()
            debugger = null
-//           System.exit(0)
+           System.exit(0)
         } //-end 'try'
         catch(e) {
             println "====================================================";
