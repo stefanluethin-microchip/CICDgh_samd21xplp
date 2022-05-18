@@ -18,6 +18,8 @@
 */firmware/*.X/.generated_files/
 */firmware/*.X/nbproject/Makefile-*
 */firmware/*.X/nbproject/private/
+#-temp file from mdb.bat, mdbcs-runs
+*/firmware/*.X/MPLAB*.xml*
 
 # Precompiled Headers
 *.gch
