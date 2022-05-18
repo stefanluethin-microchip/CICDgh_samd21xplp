@@ -87,12 +87,13 @@ class myTest {
              //-################################################-//
              //-run for random-num of millis
             Random randVal = new Random()
-            int val3 = randVal.nextInt(10) //-so we at least run 3s
+            int val3 = (randVal.nextInt(10)+2) //-at least run 2s
             int randMillis = val3*1000
             println("");
             println("");
             println("");
             println("============================================================================");
+            println("               STOP anytime by pressing SW0...");
             println("     ########### Performing test (1.run) -> running " + val3 + "sec and then halt");
             println("");
             debugger.run();
@@ -157,12 +158,13 @@ class myTest {
             
             
              //-new 'char2prntIdx' written, so can 'continue'/'reset+run' 2.time again for random millis
-            int val4 = (1 + randVal.nextInt(10)) //-so we at least run 3s           
+            int val4 = (1 + randVal.nextInt(10)) 
             int rand2Millis = val4*1000            
             println("");
             println("");
             println("");
             println("============================================================================");
+            println("               STOP anytime by pressing SW0...");
             println("     ########### Performing test (2.run) -> running " + val4 + "sec and then halt");
             println("");
 
