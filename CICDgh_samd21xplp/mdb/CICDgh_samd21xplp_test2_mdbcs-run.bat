@@ -22,6 +22,9 @@
 @REM   !!!  20019_DEV8 (currently to be renew!)         !!!
 @REM   !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @REM 
+@REM Call-syntax:
+@REM    (DOS: CICDgh_samd21xplp)> .\CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test2_mdbcs-run.bat
+@REM 
 @REM History:
 @REM   v1.0: first working version (SL, 17.5.22)
 @REM
@@ -32,7 +35,7 @@
 @SET GROOVY_C=groovy
 @REM  relativ path from prj.X directory
 @SET GROOVY_SCR_RELP=..\\..\\mdb
-@SET GROOVY_SCR_N=CICDgh_samd21xplp_test2_mdbcs.groovy
+@SET GROOVY_SCR_N=CICDgh_samd21xplp_test2_mdbcs-scr.groovy
 @SET GROOVY_SCR=%GROOVY_SCR_RELP%\\%GROOVY_SCR_N%
 @REM environment setup
 @SET SETUP_ENV_SCR_P=%GROOVY_SCR_RELP%
@@ -71,7 +74,7 @@ CALL %SETUP_JAVA_SCR%
 @REM now start groovy-script with mdbcs
 @REM cmdLine: <repo>\CICDgh_samd21xplp\firmware\CICDgit_samd21xplp.X>groovy "..\\..\\mdb\\CICDgh_samd21xplp_test2_mdbcs.groovy"
 @ECHO _
-@ECHO ######: Starting mdbcs.groovy...
+@ECHO ######: Starting mdbcs.groovy: -%GROOVY_C% "%GROOVY_SCR%"-
 @CALL %GROOVY_C% "%GROOVY_SCR%"
 
 @REM go back to where script started
