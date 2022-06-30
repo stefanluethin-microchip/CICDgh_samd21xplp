@@ -65,7 +65,7 @@ class myTest {
         try {
              //---------------- MAIN -------------------/
             println("=================================");
-            println("##### Start running-" + ELF2USE + "-");
+            println("##### Start-2 running-" + ELF2USE + "-");
             
             Properties props = new Properties();
             //-!! use existing Props, BUT following creates Groovy-error
@@ -82,6 +82,8 @@ class myTest {
             debugger.loadFile(ELF2USE);
             debugger.program();
             
+            
+            
              //-################################################-//
              //-############## start test (1.run) ##############-//
              //-################################################-//
@@ -97,18 +99,20 @@ class myTest {
             println("     ########### Performing test (1.run) -> running " + val3 + "sec and then halt");
             println("");
             debugger.run();
+             //-after 'random-milli-sec' run, halt and 
             debugger.sleep(randMillis);
             debugger.halt();
             while (debugger.isRunning()) {};
             def pc = debugger.getPC();
             println("########### Halted at: 0x" + Long.toHexString(pc));
 
+
+
              //-################################################-//
              //-############## start test (2.run) ##############-//
              //-################################################-//
 
-             //-############## regression goal #################-//
-             //-solve mdb.bat-limit 'interpreting output'
+             //-############## goal for 2.run = solve mdb.bat-limit 'interpreting output'
              //- UARTTX prints 2 chars, ch1='a' fix and
              //-  ch2=array[char2prntIdx]={'b','c','d'} and initially
              //-  char2prntIdx=0 at start, but can be changed as global var
@@ -117,17 +121,9 @@ class myTest {
              //-  =1 -> ch2='c' if '0               < $(finalLedCnt)%10 < $(REGR_LED_THR)' (== finalLedCnt=0-4)
              //-  =2 -> ch2='d' if '$(REGR_LED_THR) < $(finalLedCnt)%10 < $(REGR_LED_MAX)' (== finalLedCnt=5-9)
 
-             //-############## regression loop (2.run) #################-//
-             //-after 'random-milli-sec' run, halt and 
-             //- read current value of global variable 'char2prntIdx'
-            String char2prntIdxSymbStr = "char2prntIdx";
-            def char2prntIdxSymbAddr = debugger.getSymbolAddress(char2prntIdxSymbStr)
-            byte[] char2prntIdxBuf = new byte[4]
-            debugger.readFileRegisters(char2prntIdxSymbAddr, char2prntIdxBuf.length, char2prntIdxBuf);
-            def char2prntIdxVal = byte2long(char2prntIdxBuf);
-            println("########### Address of \"" + char2prntIdxSymbStr + "\": 0x" + Long.toHexString(char2prntIdxSymbAddr) + " Value : " + char2prntIdxVal);
+             //-############## check result of variable 'finalLedCnt' of run1:
             
-             //- also read current value of global variable 'finalLedCnt'
+             //- read current value of global variable 'finalLedCnt'
             String finalLedCntSymbStr = "finalLedCnt";
             def finalLedCntAddr = debugger.getSymbolAddress(finalLedCntSymbStr)
             byte[] finalLedCntBuf = new byte[4]
@@ -135,8 +131,16 @@ class myTest {
             def finalLedCntVal = byte2long(finalLedCntBuf);
             println("########### Address of \"" + finalLedCntSymbStr + "\": 0x" + Long.toHexString(finalLedCntAddr) + " Value : " + finalLedCntVal);
 
-             //-############## decision for 2.run #################-//
-             //-now for 2.run set ch2 (='char2prntIdx') depending on 'finalLedCnt'
+             //-############## make decision for 2.run on how to set 'char2prntIdx' depending on run1 #################-//
+              //-####first read current value of global variable 'char2prntIdx' == index of char-print-array ['a,' , 'b' , 'c']
+            String char2prntIdxSymbStr = "char2prntIdx";
+            def char2prntIdxSymbAddr = debugger.getSymbolAddress(char2prntIdxSymbStr)
+            byte[] char2prntIdxBuf = new byte[4]
+            debugger.readFileRegisters(char2prntIdxSymbAddr, char2prntIdxBuf.length, char2prntIdxBuf);
+            def char2prntIdxVal = byte2long(char2prntIdxBuf);
+            println("########### Address of \"" + char2prntIdxSymbStr + "\": 0x" + Long.toHexString(char2prntIdxSymbAddr) + " Value : " + char2prntIdxVal);
+
+             //-#### now for 2.run set ch2 (='char2prntIdx') depending on 'finalLedCnt'
              //-  =1 -> ch2='c' if '0               < $(finalLedCnt)%10 < $(REGR_LED_THR)' (== finalLedCnt=0-4)
              //-  =2 -> ch2='d' if '$(REGR_LED_THR) < $(finalLedCnt)%10 < $(REGR_LED_MAX)' (== finalLedCnt=5-9)
             def finalLedCntValTest = finalLedCntVal%LED_CNT_MOD 
@@ -151,13 +155,15 @@ class myTest {
             {
                 CH2_IDX_NEW = 0
             }
+
+             //-#### finally write decision == new 'char2prntIdx' for 2.run into HW
             byte[] ch2IdxNewBuf = new byte[4]
             ch2IdxNewBuf = long2byte(CH2_IDX_NEW);
             debugger.writeFileRegisters(char2prntIdxSymbAddr, ch2IdxNewBuf.length, ch2IdxNewBuf);
             println("########### for 2.run ch2_idx(new): " + CH2_IDX_NEW);            
             
             
-             //-new 'char2prntIdx' written, so can 'continue'/'reset+run' 2.time again for random millis
+             //-#### new 'char2prntIdx' written, so can we can 'continue' == 'reset+run' 2.time again for random millis
             int val4 = (1 + randVal.nextInt(10)) 
             int rand2Millis = val4*1000            
             println("");
@@ -173,21 +179,41 @@ class myTest {
             debugger.halt();
             while (debugger.isRunning()) {};
 
-             //set breakpoint 'testEnd()' and jump there
+
+
+             //-###################################################################################-//
+             //-############## stop if timeout is reached and user did not press SW0 ##############-//
+             //-###################################################################################-//
+             
+             //-if user pressed SW0 during run the FW would have jumped to 'endTest()' and loops there BUT
+             //- if user did not press SW0 we need to stop as well and this is done by manually setting
+             //- the PC=testEnd, hence from external/groovy-script we can change the execution by
+             //- setting the breakpoint to 'testEnd()' and jump there (=='debugger.setPC()')
             String testEndSymb = "testEnd"
             debugger.setBP(testEndSymb)
             def testEndAddr = debugger.getSymbolAddress(testEndSymb)
             debugger.setPC(testEndAddr)
             
+
+
+
+             //-############################################################-//
+             //-############## get+print final result of run2 ##############-//
+             //-############################################################-//
              //-get final result of 'finalLedCnt'
             debugger.readFileRegisters(finalLedCntAddr, finalLedCntBuf.length, finalLedCntBuf);
             finalLedCntVal = byte2long(finalLedCntBuf);
             println("########### Address of \"" + finalLedCntSymbStr + "\": 0x" + Long.toHexString(finalLedCntAddr) + " Value : " + finalLedCntVal);
 
-             //-finally erase target for a clean wrapup
+             //-finally erase target for a clean wrapup -> not working - need debug!
             //debugger.erase();
             
-             //-finish up 
+
+
+
+             //-#########################################################-//
+             //-############## finish up and properly stop ##############-//
+             //-#########################################################-//           
             println "";
             println("##### ========================================");
             println("##### ======= Success: end of test =======##");
