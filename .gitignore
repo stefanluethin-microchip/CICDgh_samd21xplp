@@ -20,6 +20,7 @@
 */firmware/*.X/nbproject/private/
 #-temp file from mdb.bat, mdbcs-runs
 */firmware/*.X/MPLAB*.xml*
+*.bak
 
 # Precompiled Headers
 *.gch
