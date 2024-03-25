@@ -21,6 +21,7 @@
 #-temp file from mdb.bat, mdbcs-runs
 */firmware/*.X/MPLAB*.xml*
 *.bak
+*/firmware/*.X/defmplabxtrace.log*
 
 # Precompiled Headers
 *.gch
