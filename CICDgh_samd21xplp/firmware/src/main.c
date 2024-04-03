@@ -36,6 +36,8 @@
 //-SL:
 volatile uint32_t myCnt;
 volatile uint32_t finalLedCnt;
+volatile uint32_t ledFreqCnt;
+#define LEDFREQCNTMAX 5
 #define cEchoCnt 10
 #define PRESSED  0
 #define RELEASED 1
@@ -48,7 +50,13 @@ void testEnd(void);
 
 void sysTickTimeout_handler(uintptr_t context)
 {
-	sysTickTmrExFlag=true;
+    ledFreqCnt++;
+	if(LEDFREQCNTMAX == ledFreqCnt)
+    {
+        sysTickTmrExFlag=true;
+        ledFreqCnt=1;
+    }
+    
 }
 
 int main ( void )
@@ -56,11 +64,12 @@ int main ( void )
     /* Initialize all modules */
     SYS_Initialize ( NULL );
     printf("\n\r");
-    printf("\n\r START CICDtesting ...");
+    printf("\n\r START CICDtesting (LEDFREQCNTMAX=%d) ...",LEDFREQCNTMAX);
 
      //-SL: inits
     myCnt=0; //-SL: central counter
     finalLedCnt=0;
+    ledFreqCnt=1; //-=1 means default LedFreq = sysTmr-freq
     sysTickTmrExFlag=false; //-SL: SysTickWrap-event flag
      //-SL: SW0 defined as GPIO-In but still need to call this fct to enable In
     SW0_InputEnable();
