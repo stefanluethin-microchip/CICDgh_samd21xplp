@@ -43,11 +43,11 @@ pipeline {
                  sh(
                     label: 'environment check',
                     script: """
-			    set +x
+						    set +x
                             echo "========================================================================"
                             echo "Running Jenkins-Pipeline ${env.JPIPELINE}"
                             echo "========================================================================"
-			    set -x
+							set -x
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
 			    echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"							
                             echo "###SL: WS = ${env.WORKSPACE}"
@@ -107,8 +107,8 @@ pipeline {
             //cleanWs()   //-Jenkins-buildin fct to cleanup Workspace
         }
         success {
-            echo "##-SL: finished "
-            //cleanWs()   //-Jenkins-buildin fct to cleanup Workspace
+            echo "post / success: ..."
+			
         }
 		
     }  //-end 'post'
