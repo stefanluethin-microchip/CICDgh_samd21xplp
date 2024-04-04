@@ -7,6 +7,7 @@
 pipeline {
     environment {
         DEMO_V = "demo_simple_d1"
+		JPIPELINE = "Jenkinsfile_d2"
 		 //-SL: root path to tools and IDE
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.20"
@@ -43,7 +44,7 @@ pipeline {
                     label: 'environment check',
                     script: """
                             echo "========================================================================"
-                            echo "Running Jenkins-Pipeline ${env.DEMO_V} -- ${env.JOB_NAME}"
+                            echo "Running Jenkins-Pipeline ${env.JPIPELINE}"
                             echo "========================================================================"
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                             echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
