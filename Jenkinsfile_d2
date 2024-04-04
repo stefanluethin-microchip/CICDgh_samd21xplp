@@ -47,7 +47,9 @@ pipeline {
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
                             echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"
                             echo "###SL: WS = ${env.WORKSPACE}"
-			    echo "###SL: env path ${PATH}  / ${env.PATH}"
+			    echo "###SL: env path1 ${PATH}"
+			    echo "###SL: env path2 ${env.PATH}"
+			    echo "###SL: which xc32-gcc"
                             """
                    )
                  sh(
