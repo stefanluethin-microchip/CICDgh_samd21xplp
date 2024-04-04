@@ -49,8 +49,7 @@ pipeline {
                             echo "###SL: WS = ${env.WORKSPACE}"
 			    echo "###SL: env path1 ${PATH}"
 			    echo "###SL: env path2 ${env.PATH}"
-			    echo "###SL: which xc32-gcc"
-			    which xc32-gcc
+			    xc32-gcc --version 
                             """
                    )
                  sh(
