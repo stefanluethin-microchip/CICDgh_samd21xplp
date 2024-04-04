@@ -49,7 +49,6 @@ pipeline {
                             echo "###SL: WS = ${env.WORKSPACE}"
 			    echo "###SL: env path1 ${PATH}"
 			    echo "###SL: env path2 ${env.PATH}"
-			    xc32-gcc --version 
                             """
                    )
                  sh(
@@ -69,6 +68,8 @@ pipeline {
                      label: 'Generate build makefiles',
                      script: """
                             echo "###SL: re-creating makefiles for ${env.PRJ_MK_STR}"
+			    #-SL: need to provide path to prjMakefilesGenerator, whereas below for make you don't need to provide
+			    #-SL:  a path, as it is extracted from the configuration.xml file
                             #"${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             /opt/microchip/mplabx/v6.05/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
                             """
@@ -76,6 +77,8 @@ pipeline {
                  sh(
                      label: 'compile = running Makefile',
                      script: """
+			    #-SL: above for prjMakefilesGenerator need to provide path to it, whereas for make 
+			    #-SL:  you don't need to provide a path, as it is extracted from the configuration.xml file
                              cd "${env.PRJ_WS_REL_P}"
                              echo "###SL: current path `pwd`"
                              make clean
