@@ -43,13 +43,11 @@ pipeline {
                  sh(
                     label: 'environment check',
                     script: """
-                            echo "========================================================================"
-                            echo "Running Jenkins-Pipeline ${env.JPIPELINE}"
-                            echo "========================================================================"
-							set +x
+                            @echo "========================================================================"
+                            @echo "Running Jenkins-Pipeline ${env.JPIPELINE}"
+                            @echo "========================================================================"
                             echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                            set -x
-							@echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"							
+							echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"							
                             echo "###SL: WS = ${env.WORKSPACE}"
 			    echo "###SL: env path1 ${PATH}"
 			    echo "###SL: env path2 ${env.PATH}"
