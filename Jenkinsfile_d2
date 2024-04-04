@@ -7,7 +7,7 @@
 pipeline {
     environment {
         DEMO_V = "demo_simple_d1"
-		J_PIPELINE = ${env.JOB_NAME}
+		J_PIPELINE = "${env.JOB_NAME}"
 		 //-SL: root path to tools and IDE
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.20"
