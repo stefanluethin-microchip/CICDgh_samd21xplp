@@ -51,6 +51,7 @@ pipeline {
                             echo "###SL: WS = ${env.WORKSPACE}"
 			    echo "###SL: env path1 ${PATH}"
 			    echo "###SL: env path2 ${env.PATH}"
+			    printenv
                             """
                    )
                  sh(
