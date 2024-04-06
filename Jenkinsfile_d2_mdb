@@ -112,7 +112,7 @@ pipeline {
                             echo "###-SL: ========================================================================"
 							  #-SL: CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test1a_Setup_env.sh
 							  #-SL: not needed, as setup above for compile already
-							  which mdb || ECHO "###-SL--------: mdb.bat not found, stop here
+							  which mdb || ECHO "###-SL--------: mdb.bat not found, stop here"
 							set -x
                             """
                    ) //-end 'step=mdb-run_envCheck'
