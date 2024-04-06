@@ -22,6 +22,7 @@
 */firmware/*.X/MPLAB*.xml*
 *.bak
 */firmware/*.X/defmplabxtrace.log*
+*defmplabxtrace.log*
 
 # Precompiled Headers
 *.gch
