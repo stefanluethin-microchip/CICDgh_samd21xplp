@@ -44,7 +44,7 @@ pipeline {
 				filename 'Dockerfile_4_J_d2'
 				registryUrl "https://hub.docker.com/"
 			}
-		}
+		} //- run 'build' stage in DockerContainer
         stage('Build') {
             steps {
                  sh(
