@@ -110,7 +110,7 @@ pipeline {
                             echo "###-SL:  mdbbat/hw-in-th-loop run from ${env.WORKAREA}"
 							echo "###-SL:  setup env"
                             echo "###-SL: ========================================================================"
-							  #-SL: CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test1a_Setup_env.bat
+							  #-SL: CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test1a_Setup_env.bat
 							  #-SL: not needed, as setup above for compile already
 							  CALL WHERE /q mdb.bat || ECHO "###-SL--------: mdb.bat not found, stop here
 							set -x
@@ -123,7 +123,7 @@ pipeline {
                             echo "###-SL: ========================================================================"
                             echo "###-SL: mdbbat/hw-in-th-loop run - elf=exists check OR compile
                             echo "###-SL: ========================================================================"
-							  #-SL: call for compile here: CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test2_mdbbat-run.bat
+							  #-SL: call for compile here: CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test2_mdbbat-run.bat
 							${ELF_TEST_SCR_FULLP}
 							set -x
                             """
@@ -136,7 +136,7 @@ pipeline {
                             echo "###-SL: Starting mdbbat/hw-in-th-loop run from ${env.WORKAREA}"
 							echo "###-SL: setup env"
                             echo "###-SL: ========================================================================"
-							CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test2_mdbbat-run.bat
+							CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test2_mdbbat-run.bat
 							set -x
                             """
                    ) //-end 'step=mdbbat_HW_in_loop_run'
