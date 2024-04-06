@@ -41,7 +41,7 @@ pipeline {
         stage('Build') {
 			agent {
 				dockerfile  {
-					label 'docker_J_d2'
+					label 'DEMLTM16422uDockerLabel'
 					filename 'Dockerfile_4_J_d2'
 					registryUrl "https://hub.docker.com/"
 				}
