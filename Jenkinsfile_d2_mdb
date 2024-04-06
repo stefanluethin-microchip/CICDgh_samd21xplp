@@ -34,6 +34,7 @@ pipeline {
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
+		ELF_TEST_SCR_FULLP="${env.PRJ_WS_REL_P}" + "result_check.sh"
     }
     agent any
     
@@ -44,15 +45,15 @@ pipeline {
                     label: 'environment check',
                     script: """
 						    set +x
-                            echo "========================================================================"
-                            echo "Running Jenkins-Pipeline ${env.JPIPELINE}"
-                            echo "========================================================================"
+                            echo "###-SL: ========================================================================"
+                            echo "###-SL: Running Jenkins-Pipeline ${env.JPIPELINE}"
+                            echo "###-SL: ========================================================================"
 							set -x
-                            echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-							echo "###SL: prj_root_p = ${env.PRJ_ROOT_P}"							
-                            echo "###SL: WS = ${env.WORKSPACE}"
+                            echo "###-SL: Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+							echo "###-SL: prj_root_p = ${env.PRJ_ROOT_P}"							
+                            echo "###-SL: WS = ${env.WORKSPACE}"
                             """
-                   )
+                   ) //-SL: end 'step: env-check'
                  sh(
                      label: 'cleanup (if needed)',
                      script: """
@@ -65,53 +66,83 @@ pipeline {
                             rm -rf nbproject/Package-samd21xplp.bash
                             rm -rf nbproject/private
                             """
-                 )
+                 ) //-SL: end 'step: cleanup'
                  sh(
                      label: 'Generate build makefiles',
                      script: """
-                            echo "###SL: re-creating makefiles for ${env.PRJ_MK_STR}"
-							#-SL: need to provide path to prjMakefilesGenerator, whereas below for make you don't need to provide
-							#-SL:  a path, as it is extracted from the configuration.xml file
-                            #"${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
+                            echo "###-SL: re-creating makefiles for ${env.PRJ_MK_STR}"
+							 #-SL: need to provide path to prjMakefilesGenerator, whereas below for make you don't need to provide
+							 #-SL:  a path, as it is extracted from the configuration.xml file
+                             #-SL: "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             /opt/microchip/mplabx/v6.05/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
                             """
-                 )
+                 ) //-SL: end 'step: create/update Makefiles'
                  sh(
                      label: 'compile = running Makefile',
                      script: """
-							#-SL: above for prjMakefilesGenerator need to provide path to it, whereas for make 
-							#-SL:  you don't need to provide a path, as it is extracted from the configuration.xml file
-                             cd "${env.PRJ_WS_REL_P}"
-                             echo "###SL: current path `pwd`"
-                             make clean
-                             make CONF="${env.MPLABX_CFG_N}"
-                             """
-                 )
+							 #-SL: above for prjMakefilesGenerator need to provide path to it, whereas for make 
+							 #-SL:  you don't need to provide a path, as it is extracted from the configuration.xml file
+                            cd "${env.PRJ_WS_REL_P}"
+                            echo "###SL: current path `pwd`"
+                            make clean
+                            make CONF="${env.MPLABX_CFG_N}"
+                            """
+                 ) //-SL: end 'step: compile-w-make'
                  sh(
                      label: 'compile successful?',
                      script: """
                              cd "${env.PRJ_WS_REL_P}"
                              ${ELF_TEST_SCR}
                              """
-                 )
+                 ) //-SL: end 'step: result-check'
+				 
             } //-end 'steps' in 'stage=build'
         } //-end stage=build
+		
         stage('HWrun') {
             steps {
+
                  sh(
-                    label: 'start mdbbat run',
+                    label: 'mdb-run_envCheck',
                     script: """
 						    set +x
-                            echo "========================================================================"
-                            echo "####- Starting mdbbat/hw-in-th-loop run from ${env.WORKAREA}"
-							echo "####- setup env"
-                            echo "========================================================================"
-							CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test1a_Setup_env.bat
+                            echo "###-SL: ========================================================================"
+                            echo "###-SL:  mdbbat/hw-in-th-loop run from ${env.WORKAREA}"
+							echo "###-SL:  setup env"
+                            echo "###-SL: ========================================================================"
+							  #-SL: CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test1a_Setup_env.bat
+							  #-SL: not needed, as setup above for compile already
+							  @CALL WHERE /q mdb.bat || ECHO "###-SL--------: mdb.bat not found, stop here
 							set -x
                             """
-                   ) //-end 'step=env-setup-4-mdbbat'
-            } //-end 'steps' in 'stage=build'
-        } //-end stage=build
+                   ) //-end 'step=mdb-run_envCheck'
+                 sh(
+                    label: 'compile_elfExistsCheck',
+                    script: """
+						    set +x
+                            echo "###-SL: ========================================================================"
+                            echo "###-SL: mdbbat/hw-in-th-loop run - elf=exists check OR compile
+                            echo "###-SL: ========================================================================"
+							  #-SL: call for compile here: CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test2_mdbbat-run.bat
+							${ELF_TEST_SCR_FULLP}
+							set -x
+                            """
+                   ) //-end 'step=compile_elfExistsCheck'
+                 sh(
+                    label: 'mdbbat_HW_in_loop_run',
+                    script: """
+						    set +x
+                            echo "###-SL: ========================================================================"
+                            echo "###-SL: Starting mdbbat/hw-in-th-loop run from ${env.WORKAREA}"
+							echo "###-SL: setup env"
+                            echo "###-SL: ========================================================================"
+							CICDgh_samd21xplp\mdb\CICDgh_samd21xplp_test2_mdbbat-run.bat
+							set -x
+                            """
+                   ) //-end 'step=mdbbat_HW_in_loop_run'
+
+            } //-end 'steps' in 'stage=HWrun'
+        } //-end stage=HWrun
 
     } //-end 'stages'
     
