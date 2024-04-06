@@ -13,8 +13,9 @@
 #- v1.0: first version (SL, 6.4.2024)
 
 #- VARIABLES
-scrN=CICDgh_samd21xplp_test2_mdbbat-run.sh
-MDBBAT_CMD=mdb
+#-scrN=CICDgh_samd21xplp_test2_mdbbat-run.sh
+scrN=$(basename $0)
+MDBBAT_CMD=mdb.sh
 #- either provide absolute path  (->case1)
 #-  OR start from correct where you have (->case2):
 #-   CICDgh_samd21xplp\firmware\
@@ -25,7 +26,7 @@ MDBBAT_CMD=mdb
 #- case2: relative path = start in correct path (=Jeninks-WK)
 MDBBAT_CMDF_P=CICDgh_samd21xplp/mdb
 MDBBAT_CMDF_N=CICDgh_samd21xplp_test2_mdbbat-cmd.txt
-MDBBAT_CMD_F=${MDBBAT_CMDF_P}\${MDBBAT_CMDF_N}
+MDBBAT_CMD_F=${MDBBAT_CMDF_P}/${MDBBAT_CMDF_N}
 
 
    ######- MAIN -######
