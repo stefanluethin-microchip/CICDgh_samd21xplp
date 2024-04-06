@@ -37,14 +37,14 @@ pipeline {
     }
     //-SL: instead of 'any agent' use a DockerContainer described in 'Dockerfile_4_J_d2'
 	//agent any
-	agent {
-		dockerfile  {
-		    label 'docker_J_d2'
-		    filename 'Dockerfile_4_J_d2'
-		    registryUrl "https://hub.docker.com/"
-		}
-	}
     stages {
+		agent {
+			dockerfile  {
+				label 'docker_J_d2'
+				filename 'Dockerfile_4_J_d2'
+				registryUrl "https://hub.docker.com/"
+			}
+		}
         stage('Build') {
             steps {
                  sh(
