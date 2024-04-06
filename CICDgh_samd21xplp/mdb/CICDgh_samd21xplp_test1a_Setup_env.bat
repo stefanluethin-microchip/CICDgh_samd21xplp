@@ -1,4 +1,4 @@
-@ECHO off
+::@ECHO off
 @REM Description: simple bat-script to setup the environment for M24_24014DEV4.
 @REM			  It basically extends the OS-search with the needed tools
 @REM
@@ -16,8 +16,7 @@
 @SET GNU_HOME=%MPLABX_HOME%\gnuBins\GnuWin32
 @SET XC32_HOME=C:\Program Files\Microchip\xc32\%XC32_V%
 
-
- REM fix Variable
+@REM fix Variable
 @SET scrN=M24_24014DEV4-0_Setup_env.bat
 
 
@@ -29,25 +28,19 @@
 @REM  So if env-variable BASEPATH not set, then this script runs 1.time,
 @REM	hence BASEPATH=%PATH%, otherwise it ran before and BASEPATH already set.
 @REM  To keep it simple this must be done manually by user
-@IF "%BASEPATH%"=="" (
-    @ECHO    ###: for simplicity you must copy the current OS-searchpath into BASEPATH with:
-    @ECHO    ###:        set BASEPATH=^%%PATH%%
-    @ECHO    ###: and run this script again
-    GOTO SCR_ERROR
+@IF NOT DEFINED BASEPATHSETDONE ( 
+	@ECHO   ##: store current PATH in BASEPATH
+	@SET "BASEPATH=%PATH%"
+	@SET BASEPATHSETDONE=1
 ) ELSE (
-    @ECHO    ##: BASEPATH set -^> continue
+	@ECHO    ##: BASEPATH set -^> nothing to do
 )
 
-REM extend OS-search
+@REM extend OS-search
 @ECHO    ##: extending OS-searchpath
-@SET PATH=%MPLABX_HOME%;%GNU_HOME%\bin;%XC32_HOME%;%BASEPATH%
-@SET ERRORLEVEL=0
-@GOTO END
+@SET PATH=%MPLABX_HOME%\mplab_platform\bin;%GNU_HOME%\bin;%XC32_HOME%\bin;%BASEPATH%
 
-:SCR_ERROR
-  @ECHO .
-  @ECHO XXXXXXXXXXXX(%scrN%):   error BASEPATH not set
-  @SET ERRORLEVEL=1
-  
-:END
-  @ECHO %scrN%: END (errorlevel: %ERRORLEVEL%)
+@ECHO %scrN%: END
+
+
+
