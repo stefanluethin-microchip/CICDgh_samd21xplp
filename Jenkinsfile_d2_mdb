@@ -135,6 +135,7 @@ pipeline {
                             echo "###-SL: Starting mdbbat/hw-in-th-loop run from ${env.WORKAREA}"
 							echo "###-SL: setup env"
                             echo "###-SL: ========================================================================"
+						chmod +x CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test2_mdbbat-run.sh 
 							CICDgh_samd21xplp/mdb/CICDgh_samd21xplp_test2_mdbbat-run.sh
 							set -x
                             """
