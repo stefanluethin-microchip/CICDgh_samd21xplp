@@ -3,6 +3,7 @@
 #-			  It basically extends the OS-search with the needed tools
 #-
 #- History:
+#-   v1.1: working version-1 (SL, 6.4.2024)
 #-   v1.0: first version (SL, 21.3.2024)
 #-
 #- Hints:
@@ -10,14 +11,17 @@
 #-	Important notice: DOS-shell does NOT allow spaces/tab
 #-        around the '=' when defining env-variables !!!
 export MPLABX_V=v6.20
-export JAVA_VERS=zulu8.64.0.19-ca-fx-jre8.0.345-win_x64
+export JAVA_VERS=zulu8.64.0.19-ca-fx-jre8.0.345-linux_x64
 export XC32_V=v4.35
-export MPLABX_HOME=C:\Program Files\Microchip\MPLABX\%MPLABX_V%
-export GNU_HOME=%MPLABX_HOME%\gnuBins\GnuWin32
-export XC32_HOME=C:\Program Files\Microchip\xc32\%XC32_V%
+export MCHP_ROOT_HOME=/opt/microchip
+export MPLABX_HOME=${MCHP_ROOT_HOME}/mplabx/${MPLABX_V}
+export XC32_HOME=${MCHP_ROOT_HOME}/xc32/${XC32_V}
+#- don't need GNU-tools, as we're on Linux, hurry
+export GNU_HOME=${MPLABX_HOME}/gnuBins/GnuWin32
 
 #-fix Variable
-scrN=M24_24014DEV4-0_Setup_env.sh
+scrN=$(basename $0)
+
 
 
 echo "###--------------------------------------------------------"
@@ -38,9 +42,12 @@ fi
 
 #- extend OS-search
 echo   "###${scrN}: extending OS-searchpath"
-export PATH=${MPLABX_HOME}\mplab_platform\bin;{GNU_HOME}\bin;{XC32_HOME}\bin;${BASEPATH}
+ #- don't need GNU-tools, as we're on Linux, hurry
+#echo "SL1: $PATH"
+export PATH="${MPLABX_HOME}/mplab_platform/bin:${XC32_HOME}/bin:${BASEPATH}"
+#echo "SL2: $PATH"
+which mdb.sh
+which xc32-gcc
 
 echo   "###${scrN}: end"
 echo   ""
-
-
