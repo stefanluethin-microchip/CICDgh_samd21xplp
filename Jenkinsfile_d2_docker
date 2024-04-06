@@ -116,7 +116,7 @@ pipeline {
             //cleanWs()   //-Jenkins-buildin fct to cleanup Workspace
         }
         success {
-            echo "###-SL: current path `pwd`"post / success: ..."
+            echo "###-SL: current path `pwd`"
         }
     }  //-end 'post'
 
