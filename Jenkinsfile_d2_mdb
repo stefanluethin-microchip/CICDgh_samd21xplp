@@ -34,7 +34,7 @@ pipeline {
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
-		ELF_TEST_SCR_FULLP="${env.PRJ_WS_REL_P}" + "result_check.sh"
+		ELF_TEST_SCR_FULLP="${env.PRJ_WS_REL_P}" + "/" + "result_check.sh"
     }
     agent any
     
