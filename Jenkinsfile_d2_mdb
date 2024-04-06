@@ -121,7 +121,7 @@ pipeline {
                     script: """
 						    set +x
                             echo "###-SL: ========================================================================"
-                            echo "###-SL: mdbbat/hw-in-th-loop run - elf=exists check OR compile
+                            echo "###-SL: mdbbat/hw-in-th-loop run - elf=exists check OR compile"
                             echo "###-SL: ========================================================================"
 							${ELF_TEST_SCR_FULLP}
 							set -x
