@@ -41,7 +41,7 @@ pipeline {
         stage('Build') {
 			agent {
 				dockerfile  {
-					label 'DEMLTM16422uDockerLabel'
+					label 'DEM-LT-M16422u_localLnxPC'
 					filename 'Dockerfile_4_J_d2'
 					registryUrl "https://hub.docker.com/"
 				}
