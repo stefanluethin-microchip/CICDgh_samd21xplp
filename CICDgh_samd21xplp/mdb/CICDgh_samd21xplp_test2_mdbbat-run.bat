@@ -18,10 +18,18 @@
 
 @REM   VARIABLES
 @SET scrN=CICDgh_samd21xplp_test2_mdbbat-run.bat
-@SET REPO_P=C:\mchp\Seminars\2022\220516_cicd\FW\CICDgh_samd21xplp
 @SET MDBBAT_CMD=mdb.bat
-@SET MDBBAT_CMDF_P=%REPO_P%\CICDgh_samd21xplp\mdb
+::REM either provide absolute path  (->case1)
+::REM  OR start from correct where you have (->case2):
+::REM   CICDgh_samd21xplp\firmware\
+::REM   CICDgh_samd21xplp\mdb\
+::REM case1: absolute path
+::@SET REPO_P=D:\mchp\Sessions\2022\220516_CICD-4-ESIwebex\FW\CICDgh_samd21xplp
+::@SET MDBBAT_CMDF_P=%REPO_P%\CICDgh_samd21xplp\mdb
+::REM case2: relative path = start in correct path (=Jeninks-WK)
+@SET MDBBAT_CMDF_P=CICDgh_samd21xplp\mdb
 @SET MDBBAT_CMDF_N=CICDgh_samd21xplp_test2_mdbbat-cmd.txt
+
 @SET MDBBAT_CMD_F=%MDBBAT_CMDF_P%\%MDBBAT_CMDF_N%
 
 
@@ -31,7 +39,7 @@
 
 @REM capture starting dir-path, so we can go back
 @SET ORIG_P=%cd%
-@CD %REPO_P%
+::@CD %REPO_P%
 @ECHO ######: Starting %scrN% from %cd%
 @ECHO _
 
