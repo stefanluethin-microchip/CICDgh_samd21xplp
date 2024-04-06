@@ -36,7 +36,7 @@ pipeline {
         ELF_TEST_SCR = "./" + "result_check.sh"
     }
     //-SL: instead of 'any agent' use a DockerContainer described in 'Dockerfile_4_J_d2'
-	//agent any
+	agent any
     stages {
 		agent {
 			dockerfile  {
