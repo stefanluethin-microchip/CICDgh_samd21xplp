@@ -7,7 +7,7 @@
 pipeline {
     environment {
         DEMO_V = "demo_simple_d1"
-		JPIPELINE = "files_cicd/Jenkinsfile_d2"
+		JPIPELINE = "files_cicd/Jenkinsfile_d2_docker_24014dev4"
 		 //-SL: root path to tools and IDE
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.20"
@@ -115,11 +115,14 @@ pipeline {
 		//-SL:  stages-step that are optional, hence don't have to be specified
         always {
             // Clean workspace after build
-            echo "###-SL: current path `pwd`"
+			echo "###-SL: post / always from current path ${env.WORKSPACE}"
+            echo "###-SL: ========================================================================"
+            echo "###-SL:       END Jenkins-Pipeline ${env.JPIPELINE}"
+            echo "###-SL: ========================================================================"			
             //cleanWs()   //-Jenkins-buildin fct to cleanup Workspace
         }
         success {
-            echo "###-SL: current path `pwd`"
+            echo "###-SL: post/success: current path `pwd`"
         }
     }  //-end 'post'
 
