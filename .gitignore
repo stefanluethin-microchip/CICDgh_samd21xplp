@@ -23,6 +23,8 @@
 *.bak
 */firmware/*.X/defmplabxtrace.log*
 *defmplabxtrace.log*
+*mcc-manifest-autosave.yml
+*mcc.txt
 
 # Precompiled Headers
 *.gch
