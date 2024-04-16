@@ -8,7 +8,7 @@
 pipeline {
     environment {
         DEMO_V = "demo_simple_d1"
-		JPIPELINE = "Jenkinsfile_d2_24014dev4"
+		JPIPELINE = "files_cicd/Jenkinsfile_d2_24014dev4"
 		 //-SL: root path to tools and IDE
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.20"
@@ -48,7 +48,7 @@ pipeline {
                             echo "###-SL: ========================================================================"
                             echo "###-SL: Running Jenkins-Pipeline ${env.JPIPELINE}"
 							echo "###-SL: from ${env.JOB_NAME}"
-							printenv
+							//-SL: full env with: printenv
                             echo "###-SL: ========================================================================"
 							set -x
                             echo "###-SL: Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
