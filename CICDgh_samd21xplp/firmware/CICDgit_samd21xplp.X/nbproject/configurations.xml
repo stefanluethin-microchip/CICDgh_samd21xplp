@@ -147,6 +147,7 @@
       </logicalFolder>
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/samd21xplp/harmony-manifest-success.yml</itemPath>
+      <itemPath>CICDgit_samd21xplp.mc3</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -441,6 +442,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-3ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/mchp/Sessions/2022/220516_CICD-4-ESIwebex/FW/CICDgh_samd21xplp/CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X/debug/samd21xplp/CICDgit_samd21xplp_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
@@ -1049,6 +1052,8 @@
         <property key="periphComp5.gte" value="gt"/>
         <property key="periphComp6.gte" value="gt"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/mchp/Sessions/2022/220516_CICD-4-ESIwebex/FW/CICDgh_samd21xplp/CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X/debug/samd21xplp/CICDgit_samd21xplp_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
