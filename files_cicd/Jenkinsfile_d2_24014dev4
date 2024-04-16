@@ -106,12 +106,12 @@ pipeline {
 		//-SL:  stages-step that are optional, hence don't have to be specified
         always {
             // Clean workspace after build
-            echo "###-SL: current path `pwd`"post / always: ..."
+			echo "###-SL: post / always from current path `pwd`
             //cleanWs()   //-Jenkins-buildin fct to cleanup Workspace
-        }
+        } //-end 'post/always'		
         success {
             echo "###-SL: current path `pwd`"post / success: ..."
-        }
+        } //-end 'post/success'
     }  //-end 'post'
 
 } //- end 'pipeline'
