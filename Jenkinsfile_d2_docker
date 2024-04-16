@@ -34,7 +34,8 @@ pipeline {
         PRJ_MK_STR =   "${PRJ_WS_REL_P}" + "@" + "${env.MPLABX_CFG_N}"
          //-SL: simple bash-scrp to find *.elf-file and print path+name
         ELF_TEST_SCR = "./" + "result_check.sh"
-    }
+    } //- end environment
+
     //-SL: instead of 'any agent' use a DockerContainer described in 'Dockerfile_4_J_d2'
 	agent any
     stages {
@@ -81,7 +82,7 @@ pipeline {
 			     #-SL:  a path, as it is extracted from the configuration.xml file
                             #-SL: "${MPLABX_ROOT}" + "/" + "${MPLABX_V_2_USE}" + "/mplab_platform/bin/" + prjMakefilesGenerator.sh -v -f ${PRJ_WS_REL_P}@${env.MPLABX_CFG_N}
                             #-SL /opt/microchip/mplabx/v6.05/mplab_platform/bin/prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
-			    prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
+							prjMakefilesGenerator.sh -v -f ./CICDgh_samd21xplp/firmware/CICDgit_samd21xplp.X@samd21xplp
                             """
                  )  //-SL: end 'step: update/build Makefiles'
                  sh(
