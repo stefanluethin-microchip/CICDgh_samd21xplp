@@ -1,5 +1,5 @@
 # CICD
-CICD means **C**ontinuous**I**ntegration,**C**ontinuous**D**eloyment**\
+CICD means **C**ontinuous**I**ntegration,**C**ontinuous**D**eloyment\
  A CICD system is basically a system to automatically+regularily (=Continuous) execute a certain set of checks&tests (eg: xc-compile or misra-check) with your FW-development to ensure correctness at all times, so that you don't develop for x months and then need another x+y months to fix all integration-problems that get bigger the longer you wait and the more code you have to integrate.
  
 # Pillars of a CICD system
