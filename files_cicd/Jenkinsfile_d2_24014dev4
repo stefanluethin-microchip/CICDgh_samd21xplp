@@ -47,6 +47,7 @@ pipeline {
 						    set +x
                             echo "###-SL: ========================================================================"
                             echo "###-SL: Running Jenkins-Pipeline ${env.JPIPELINE}"
+							echo "###-SL: from ${env.JOB_NAME}"
                             echo "###-SL: ========================================================================"
 							set -x
                             echo "###-SL: Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
