@@ -8,6 +8,7 @@ pipeline {
     environment {
         DEMO_V = "demo_simple_d1"
 		JPIPELINE = "files_cicd/Jenkinsfile_d2_docker_24014dev4"
+		DOCKERFILENAME = "files_cicd/Dockerfile_4_d2_docker_24014dev4"		
 		 //-SL: root path to tools and IDE
         MPLABX_ROOT = "/opt/microchip/mplabx"
         MPLABX_V_2_USE = "v6.20"
@@ -54,6 +55,7 @@ pipeline {
 						    set +x
                             echo "###-SL: ========================================================================"
                             echo "###-SL:       START Jenkins-Pipeline ${env.JPIPELINE}"
+							echo "###-SL:       on agent ${env.DOCKERFILENAME}"
 							echo "###-SL:       from ${env.JOB_NAME}"
                             echo "###-SL: ========================================================================"
 							set -x
