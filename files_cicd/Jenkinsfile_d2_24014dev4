@@ -46,10 +46,11 @@ pipeline {
                     script: """
 						    set +x
                             echo "###-SL: ========================================================================"
-                            echo "###-SL: Running Jenkins-Pipeline ${env.JPIPELINE}"
-							echo "###-SL: from ${env.JOB_NAME}"
-							 #-SL-comment: full env with: printenv
+                            echo "###-SL:       START Jenkins-Pipeline ${env.JPIPELINE}"
+							echo "###-SL:       from ${env.JOB_NAME}"
                             echo "###-SL: ========================================================================"
+							 #-SL-comment: full env with: 
+							#printenv
 							set -x
                             echo "###-SL: Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
 							echo "###-SL: prj_root_p = ${env.PRJ_ROOT_P}"							
@@ -96,7 +97,7 @@ pipeline {
                              echo "###-SL (start): result check..."
 							 cd "${env.PRJ_WS_REL_P}"
                              ${ELF_TEST_SCR}
-							 echo "###-SL (end)"
+							 echo "###-SL (end)" 
                              """
                  ) //-SL: end 'step: post-proc, check elf exists with bat-script'
             } //-end 'steps' in 'stage=build'
@@ -109,6 +110,9 @@ pipeline {
         always {
             // Clean workspace after build
 			echo "###-SL: post / always from current path ${env.WORKSPACE}"
+            echo "###-SL: ========================================================================"
+            echo "###-SL:       END Jenkins-Pipeline ${env.JPIPELINE}"
+            echo "###-SL: ========================================================================"
             //cleanWs()   //-Jenkins-buildin fct to cleanup Workspace
         } //-end 'post/always'		
         success {
