@@ -15,7 +15,7 @@
     "main" function calls the "SYS_Initialize" function to initialize the state
     machines of all modules in the system
  *******************************************************************************/
-//-SL: change to test commit
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Included Files
@@ -33,14 +33,18 @@
 // Section: Main Entry Point
 // *****************************************************************************
 // *****************************************************************************
-//-SL:
+ //-------------------------M24_24014DEV4 (START)------------------------------//
+ //----------- items to change in 24014DEV4-class -------------------------//
+#define LEDINCR   1                                 //-TODO 1: M24-24014DEV4 LEDblink @ LEDINCR*250ms (=sysTmr wraps @250ms)
+char startString[] = "\n\r START M24_2414DEV ...";  //-TODO 2: M24-24014DEV4 string printed at startup
+ //-------------------------M24_24014DEV4 (END)------------------------------//
+
 volatile uint32_t myCnt;
 volatile uint32_t finalLedCnt;
-volatile uint32_t ledFreqCnt;
-#define LEDFREQCNTMAX 5
+volatile uint32_t m24_LedFreqIncrCnt;
 #define cEchoCnt 10
-#define PRESSED  0
-#define RELEASED 1
+#define PRESSED   0
+#define RELEASED  1
 volatile bool sysTickTmrExFlag;
 
 char charArray[3] = {'b','c','d'};
@@ -50,37 +54,38 @@ void testEnd(void);
 
 void sysTickTimeout_handler(uintptr_t context)
 {
-    ledFreqCnt++;
-	if(LEDFREQCNTMAX == ledFreqCnt)
+    m24_LedFreqIncrCnt++;
+    if ( LEDINCR == m24_LedFreqIncrCnt )
     {
         sysTickTmrExFlag=true;
-        ledFreqCnt=1;
+        m24_LedFreqIncrCnt=0;
     }
-    
 }
 
 int main ( void )
 {
-    /* Initialize all modules */
+    /* Initialize all modules, variables,...*/
     SYS_Initialize ( NULL );
-    printf("\n\r");
-    printf("\n\r START CICDtesting (LEDFREQCNTMAX=%d) ...",LEDFREQCNTMAX);
 
-     //-SL: inits
-    myCnt=0; //-SL: central counter
+    myCnt=0;
     finalLedCnt=0;
-    ledFreqCnt=1; //-=1 means default LedFreq = sysTmr-freq
     sysTickTmrExFlag=false; //-SL: SysTickWrap-event flag
-     //-SL: SW0 defined as GPIO-In but still need to call this fct to enable In
+    m24_LedFreqIncrCnt=0;    
+     
+     //- SW0 defined as GPIOin but still need to call this fct to enable In
     SW0_InputEnable();
-    char2prntIdx=0; //- default char-to-print = 'b'
+    char2prntIdx=0; //- default 2.char-to-print = 'b'
 
     SYSTICK_TimerStart();
     SYSTICK_TimerCallbackSet(&sysTickTimeout_handler, (uintptr_t) NULL);
+
+    
+     //------ start MAIN ------//
+    printf("\n\r");
+    printf(startString);  //-printf("\n\r START M24_2414DEV ...");
     
     while ( true )
     {
-        /* Maintain state machines of all polled MPLAB Harmony modules. */
         if(sysTickTmrExFlag)
         {
             sysTickTmrExFlag=false;
@@ -93,7 +98,6 @@ int main ( void )
                 printf("a");
             } else if ((cEchoCnt/2<myCnt) & (cEchoCnt>=myCnt))
             {
-                //printf("b");
                 printf("%c",charArray[char2prntIdx]);
                 if (cEchoCnt==myCnt)
                     myCnt=0;
@@ -108,13 +112,15 @@ int main ( void )
     }
 
     /* Execution should not come here during normal operation */
-
     return ( EXIT_FAILURE );
 }
 
 void testEnd(void)
 {
-    printf("\n\r testEnd with finalLedCnt=%d\n\r ",(int)finalLedCnt);
+    char stopString[] = "\n\r   STOP M24_2414DEV with finalLedCnt=%d\n\r";
+    
+     //printf("\n\r testEnd with finalLedCnt=%d\n\r",(int)finalLedCnt);
+    printf(stopString,(int)finalLedCnt);
     printf("\n\r");
     while(1){}
 }
