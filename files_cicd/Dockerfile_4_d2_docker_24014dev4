@@ -48,12 +48,12 @@ RUN dpkg --add-architecture i386 \
 
 
 #-SL-part3: ------------------- download (=curl) IDE-version and install ---------------------------
-# Download and install MPLAB X IDE version 6.15 and extend OS-searchpath
-ENV MPLABX_VERSION 6.15
+# Download and install MPLAB X IDE version 6.20 and extend OS-searchpath
+ENV MPLABX_VERSION 6.20
 
-#-SL: Download and install MPLAB X IDE version 6.15
+#-SL: Download and install MPLAB X IDE version $MPLABX_VERSION
 RUN curl -fSL -A "MCHP-DevSystems-CICDDownloadAgent" -o /tmp/mplabx-installer.tar \
-         "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/MPLABX-v${MPLABX_VERSION}-linux-installer.tar" \
+		 "https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SoftwareTools/MPLABX-v${MPLABX_VERSION}-linux-installer.tar" \
  && tar xf /tmp/mplabx-installer.tar -C /tmp/ && rm /tmp/mplabx-installer.tar  \
  && USER=root ./tmp/MPLABX-v${MPLABX_VERSION}-linux-installer.sh --nox11 \
     -- --unattendedmodeui none --mode unattended \
