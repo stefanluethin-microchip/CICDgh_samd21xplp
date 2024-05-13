@@ -68,6 +68,7 @@ int main ( void )
     SYS_Initialize ( NULL );
 
     myCnt=0;
+	xxxx //-error
     finalLedCnt=0;
     sysTickTmrExFlag=false; //-SL: SysTickWrap-event flag
     m24_LedFreqIncrCnt=0;    
